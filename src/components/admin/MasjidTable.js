@@ -112,6 +112,7 @@ const fetchMasjidData = async () => {
 	}
 	const editMasjidTimeTable = (masjidId) => {
 		console.log(`Edit Masjid TimeTable: `, masjidId)
+	  navigate(`/dashboard/masjid/edit-timetable/${masjidId}`);
 	}
 	const addMasjidTimeTable = (masjidId) => {
 		console.log(`Add Masjid TimeTable: `, masjidId)

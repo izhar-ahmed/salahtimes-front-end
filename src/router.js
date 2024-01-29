@@ -11,6 +11,7 @@ import AddMasjid from "./pages/admin/AddMasjid";
 import EditMasjid from "./pages/admin/EditMasjid";
 import ViewMasjid from "./pages/admin/ViewMasjid";
 import AddNamazTime from "./pages/admin/AddNamazTime";
+import EditNamazTime from "./pages/admin/EditNamazTime";
 const router = createBrowserRouter([
   {
     path: '/',
@@ -32,11 +33,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <AdminLayout />,
+    element: <ProtectedRoute><AdminLayout /></ProtectedRoute>,
     children: [
       {
         path: '',
-        element: <ProtectedRoute><Dashboard /></ProtectedRoute>
+        element: <Dashboard />
       },
       {
         path: "masjid",
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: 'masjid/add-timetable/:masjidId',
         element: <AddNamazTime />,
+      },
+      {
+        path: 'masjid/edit-timetable/:masjidId',
+        element: <EditNamazTime />
       }
     ]
   }
