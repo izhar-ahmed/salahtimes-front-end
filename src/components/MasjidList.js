@@ -5,6 +5,7 @@ import masjidImage from '../img/masjid5.jpg'
 
 const MasjidList = () => {
   const [masjids, setMasjids] = useState([]);
+  const imgUrl = 'http://localhost:8080/uploads/';
 
   useEffect(() => {
     const getAllMasjid = "http://localhost:8080/api/masjid";
@@ -12,7 +13,7 @@ const MasjidList = () => {
     axios
       .get(getAllMasjid)
       .then((response) => {
-        setMasjids(response.data);
+        setMasjids(response.data.masjidWithNamazIds);
       })
       .catch((error) => {
         console.error("Error fetching masjids:", error);
@@ -29,7 +30,7 @@ const MasjidList = () => {
               to={`masjid/${masjid.masjidId}`}
             >
             <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <img className="rounded-t-lg" src={masjidImage} alt="" />
+            <img className="rounded-t-lg" src={imgUrl+masjid.masjidPhoto} alt="" />
               {masjid.masjidName}
               <div className="p-5">
         

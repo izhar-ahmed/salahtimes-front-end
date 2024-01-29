@@ -1,9 +1,9 @@
-import Masjid from "../components/Masjid";
+import MasjidData from "../components/MasjidData";
 
 const MasjidDetails = () => {
     return (
         <>
-            <Masjid />
+            <MasjidData />
         </>
     );
 }
