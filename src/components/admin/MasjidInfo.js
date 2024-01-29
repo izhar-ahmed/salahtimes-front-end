@@ -39,7 +39,7 @@ const MasjidInfo = ({ masjidId }) => {
 					<p className="text-gray-600 mb-4 text-center	">{masjid.masjidAddress}</p>
 				</div>
 			</div>
-			<div className="container mx-auto">
+			<div className="container mx-auto flex justify-center">
 				{namazTime.length === 0 ? <h1 className="text-center text-3xl">Add Namaz Time Table For This Masjid</h1> : (
 					<div className="grid grid-cols-3 gap-4 w-[80%]">
 					{namazTime.map((nt) => (
