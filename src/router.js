@@ -22,7 +22,7 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: '/masjid/:id',
+        path: '/masjid/:masjidId',
         element: <MasjidDetails />
       }
     ]

@@ -69,6 +69,7 @@ const MasjidForm = () => {
             <label className="block text-sm font-medium text-gray-600">Masjid Name:</label>
             <input
               type="text"
+              name='masjidName'
               className="mt-1 p-2 w-full border rounded"
               value={masjidName}
               onChange={(e) => setMasjidName(e.target.value)}
@@ -80,6 +81,7 @@ const MasjidForm = () => {
             <label className="block text-sm font-medium text-gray-600">Masjid Area:</label>
             <input
               type="text"
+              name='masjidArea'
               className="mt-1 p-2 w-full border rounded"
               value={masjidArea}
               onChange={(e) => setMasjidArea(e.target.value)}
@@ -91,6 +93,7 @@ const MasjidForm = () => {
             <label className="block text-sm font-medium text-gray-600">Masjid Address:</label>
             <input
               type="text"
+              name='masjidAddress'
               className="mt-1 p-2 w-full border rounded"
               value={masjidAddress}
               onChange={(e) => setMasjidAddress(e.target.value)}
@@ -102,6 +105,7 @@ const MasjidForm = () => {
             <label className="block text-sm font-medium text-gray-600">Masjid Image:</label>
             <input
               type="file"
+              name='masjidPhoto'
               accept="image/*"
               onChange={handleImageChange}
               className="mt-1 p-2 w-full border rounded"
@@ -113,6 +117,7 @@ const MasjidForm = () => {
             <label className="block text-sm font-medium text-gray-600">Masjid Google Map Link:</label>
             <input
               type="text"
+              name='masjidGoogleMapLink'
               className="mt-1 p-2 w-full border rounded"
               value={masjidMapLink}
               onChange={(e) => setMasjidMapLink(e.target.value)}
