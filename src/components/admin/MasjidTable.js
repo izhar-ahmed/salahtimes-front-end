@@ -3,6 +3,7 @@ import DataTable from 'react-data-table-component';
 import axios from 'axios';
 import './MasjidTable.css'
 import { Link, useNavigate } from 'react-router-dom';
+import DeleteConfirmation from './DeleteConfirmation';
 
 
 
@@ -10,12 +11,13 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const MasjidTable = () => {
 	const [masjidData, setMasjidData] = useState([])
+	const [isPopupVisible, setPopupVisible] = useState(false);
+	const [deleteMasjidId, setDeleteMasjidId] = useState(null);
 
 	const navigate = useNavigate();	
 
 	// use effect call
 	useEffect(() => {
-		const getAllMasjid = "http://localhost:8080/api/masjid";
 	
 		const fetchData = async () => {
 			await fetchMasjidData();
@@ -61,14 +63,14 @@ const fetchMasjidData = async () => {
 						<>
 							<button className='mr-3' onClick={() => { addMasjidTimeTable(row.masjidId) }}>Add Timetable</button>
 							<button className='mr-3' onClick={() => { editMasjid(row.masjidId) }}>Edit</button>
-							<button className='mr-3' onClick={() => { deleteMasjid(row.masjidId) }}>Delete</button>
+							<button className='mr-3' onClick={() => { handleDeleteClick(row.masjidId) }}>Delete</button>
 							<button className='mr-3' onClick={() => { viewMasjid(row.masjidId) }}>View</button>
 						</>
 					) : (
 						<>
 							<button className='mr-3' onClick={() => { editMasjidTimeTable(row.masjidId) }}>Edit Timetable</button>
 							<button className='mr-3' onClick={() => { editMasjid(row.masjidId) }}>Edit</button>
-							<button className='mr-3' onClick={() => { deleteMasjid(row.masjidId) }}>Delete</button>
+							<button className='mr-3' onClick={() => { handleDeleteClick(row.masjidId) }}>Delete</button>
 							<button className='mr-3' onClick={() => { viewMasjid(row.masjidId) }}>View</button>
 						</>
 					)}
@@ -79,15 +81,30 @@ const fetchMasjidData = async () => {
 			width: '300px',
 		},
 	];
-	
+
 	const editMasjid = (masjidId) => {
 		console.log(`Edit Masjid: `, masjidId);
 		navigate(`/dashboard/masjid/edit-masjid/${masjidId}`);
 	}
-	const deleteMasjid = async (masjidId) => {
+
+	// handle delete click
+	const handleDeleteClick = (masjidId) => {
+		setDeleteMasjidId(masjidId);
+    setPopupVisible(true);
+  };
+
+	// handle cancel delete
+	const handleCancelDelete = () => {
+    // Close the popup and reset deleteItemId
+		console.log("cancel handle clicked")
+    setPopupVisible(false);
+    setDeleteMasjidId(null);
+  };
+
+	const handleConfirmDelete = async () => {
 		try {
 			const token = localStorage.getItem('token');
-			const deleteApi = `http://localhost:8080/api/masjid/${masjidId}`;
+			const deleteApi = `http://localhost:8080/api/masjid/${deleteMasjidId}`;
 	
 			// Make the DELETE request
 			const response = await axios.delete(deleteApi, {
@@ -99,7 +116,8 @@ const fetchMasjidData = async () => {
 	
 			// Handle the response as needed
 			 await fetchMasjidData();
-			
+			setPopupVisible(false);
+			setDeleteMasjidId(null);
 			navigate('/dashboard/masjid');
 		} catch (error) {
 			// Handle errors
@@ -124,7 +142,7 @@ const fetchMasjidData = async () => {
 
 	return (
 		<>
-			<Link type='button' to='/dashboard/masjid/add-masjid' class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Add Masjid</Link>
+			<Link type='button' to='/dashboard/masjid/add-masjid' className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Add Masjid</Link>
 			<DataTable
 				title="Masjid Table"
 				columns={columns}
@@ -132,8 +150,11 @@ const fetchMasjidData = async () => {
 				pagination
 				highlightOnHover
 				responsive
-
 			/>
+			{/* Popup */}
+      {isPopupVisible && (
+        <DeleteConfirmation onConfirm={handleConfirmDelete} onCancel={handleCancelDelete} />
+      )}
 		</>
 	);
 }

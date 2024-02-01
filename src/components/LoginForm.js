@@ -1,85 +1,99 @@
+import React from "react";
+import { Form, Field } from "react-final-form";
 import axios from "axios";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const signIn = async (credential) => {
-        try {
-            let headers = {headers: {'Content-Type': 'application/json'}};
-            let response = await axios.post('http://localhost:8080/api/login', credential, headers)
-            return response.data.token
-        } catch (error) {
-            return error
-        }
+  const onSubmit = async (values) => {
+    try {
+      let headers = { headers: { 'Content-Type': 'application/json' } };
+      let response = await axios.post('http://localhost:8080/api/login', values, headers);
+      const authToken = response.data.token;
+
+      if (!authToken) {
+        console.log("Token is invalid");
+        navigate('/m-admin');
+      }
+
+      localStorage.setItem('token', authToken);
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Login failed:', error.message);
+      // Handle login failure (show an error message, etc.)
+    }
+  };
+
+  const validate = (values) => {
+    const errors = {};
+
+    if (!values.email) {
+      errors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+      errors.email = 'Invalid email address';
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-          const authToken = await signIn({ email, password });
-          console.log(`authToken: `, authToken)
-          if(!authToken) {
-            console.log("token is invalid");
-            navigate('/m-admin');
-          }
-          localStorage.setItem('token', authToken);
-          navigate('/dashboard');
-        } catch (error) {
-          console.error('Login failed:', error.message);
-          // Handle login failure (show an error message, etc.)
-        }
-      };
+    if (!values.password) {
+      errors.password = 'Password is required';
+    } else if (values.password.length < 6) {
+      errors.password = 'Password must be at least 6 characters';
+    }
 
-    return (
-        
-            <section className="bg-gray-50 dark:bg-gray-900">
-              <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-                  <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                      Log in to your account
-                    </h1>
-                    <form className="space-y-4 md:space-y-6" method="post" onSubmit={handleSubmit}>
-                      <div>
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                        <input
-                          type="email"
-                          name="email"
-                          id="email"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          placeholder="name@company.com"
-                          onChange={(e) => setEmail(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                        <input
-                          type="password"
-                          name="password"
-                          id="password"
-                          placeholder="••••••••"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          onChange={(e) => setPassword(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <button
-                        type="submit"
-                        className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                      >
-                        Log in
-                      </button>
-                    </form>
-                  </div>
-                </div>
+    return errors;
+  };
+
+  return (
+    <div className="flex items-center justify-center h-screen">
+      
+      <Form
+        onSubmit={onSubmit}
+        validate={validate}
+        render={({ handleSubmit, submitting, form, values }) => (
+          <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4 md:space-y-6 p-8 bg-white rounded-lg shadow-md light:bg-gray-800">
+            <h1 className="text-2xl font-semibold">Login</h1>
+            <div>
+              <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 light:text-white">Your email</label>
+              <Field
+                name="email"
+                component="input"
+                type="email"
+                placeholder="name@company.com"
+                className="bg-gray-50 border border-gray-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-blue-500 light:focus:border-blue-500"
+              />
+              <div className="text-red-500">
+                <Field name="email" subscription={{ touched: true, error: true }}>
+                  {({ meta }) => (meta.touched && meta.error ? meta.error : null)}
+                </Field>
               </div>
-            </section>
-    );
-}
+            </div>
+            <div>
+              <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 light:text-white">Password</label>
+              <Field
+                name="password"
+                component="input"
+                type="password"
+                placeholder="••••••••"
+                className="bg-gray-50 border border-gray-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-blue-500 light:focus:border-blue-500"
+              />
+              <div className="text-red-500">
+                <Field name="password" subscription={{ touched: true, error: true }}>
+                  {({ meta }) => (meta.touched && meta.error ? meta.error : null)}
+                </Field>
+              </div>
+            </div>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center light:bg-blue-600 light:hover:bg-blue-700 light:focus:ring-blue-800"
+            >
+              Log in
+            </button>
+          </form>
+        )}
+      />
+    </div>
+  );
+};
 
 export default LoginForm;
