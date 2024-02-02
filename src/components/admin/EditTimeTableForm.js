@@ -68,7 +68,7 @@ const EditTimeTableForm = ({ masjidId }) => {
 		});
 		if(response.status >= 200 && response.status <= 300){
 			console.log("Masjid time table form submitted successfully.");
-			navigate('/dashboard/masjid');
+			navigate('/m-admin/masjid');
 		} else {
 			console.log("Error occure when submitting form");
 		}

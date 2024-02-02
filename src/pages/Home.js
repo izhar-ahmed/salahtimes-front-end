@@ -4,7 +4,6 @@ import MasjidList from "../components/MasjidList";
 const Home = () => {
     return (
         <>
-            <HeroSection />
             <MasjidList />
         </>
     );

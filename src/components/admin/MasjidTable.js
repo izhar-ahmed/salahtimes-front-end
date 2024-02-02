@@ -5,39 +5,35 @@ import './MasjidTable.css'
 import { Link, useNavigate } from 'react-router-dom';
 import DeleteConfirmation from './DeleteConfirmation';
 
-
-
-
-
 const MasjidTable = () => {
 	const [masjidData, setMasjidData] = useState([])
 	const [isPopupVisible, setPopupVisible] = useState(false);
 	const [deleteMasjidId, setDeleteMasjidId] = useState(null);
 
-	const navigate = useNavigate();	
+	const navigate = useNavigate();
 
 	// use effect call
 	useEffect(() => {
-	
+
 		const fetchData = async () => {
 			await fetchMasjidData();
 		};
-	
+
 		fetchData();  // Invoke the async function
-	
+
 	}, []);
 
-// fetch all masjid data and set state
-const fetchMasjidData = async () => {
-  const getAllMasjid = "http://localhost:8080/api/masjid";
+	// fetch all masjid data and set state
+	const fetchMasjidData = async () => {
+		const getAllMasjid = "http://localhost:8080/api/masjid";
 
-  try {
-    const response = await axios.get(getAllMasjid);
-    setMasjidData(response.data.masjidWithNamazIds);
-  } catch (error) {
-    console.error("Error fetching masjids:", error);
-  }
-};
+		try {
+			const response = await axios.get(getAllMasjid);
+			setMasjidData(response.data.masjidWithNamazIds);
+		} catch (error) {
+			console.error("Error fetching masjids:", error);
+		}
+	};
 
 	const columns = [
 		{
@@ -84,28 +80,28 @@ const fetchMasjidData = async () => {
 
 	const editMasjid = (masjidId) => {
 		console.log(`Edit Masjid: `, masjidId);
-		navigate(`/dashboard/masjid/edit-masjid/${masjidId}`);
+		navigate(`/m-admin/masjid/edit-masjid/${masjidId}`);
 	}
 
 	// handle delete click
 	const handleDeleteClick = (masjidId) => {
 		setDeleteMasjidId(masjidId);
-    setPopupVisible(true);
-  };
+		setPopupVisible(true);
+	};
 
 	// handle cancel delete
 	const handleCancelDelete = () => {
-    // Close the popup and reset deleteItemId
+		// Close the popup and reset deleteItemId
 		console.log("cancel handle clicked")
-    setPopupVisible(false);
-    setDeleteMasjidId(null);
-  };
+		setPopupVisible(false);
+		setDeleteMasjidId(null);
+	};
 
 	const handleConfirmDelete = async () => {
 		try {
 			const token = localStorage.getItem('token');
 			const deleteApi = `http://localhost:8080/api/masjid/${deleteMasjidId}`;
-	
+
 			// Make the DELETE request
 			const response = await axios.delete(deleteApi, {
 				headers: {
@@ -113,12 +109,12 @@ const fetchMasjidData = async () => {
 					'Content-Type': 'application/json',
 				},
 			});
-	
+
 			// Handle the response as needed
-			 await fetchMasjidData();
+			await fetchMasjidData();
 			setPopupVisible(false);
 			setDeleteMasjidId(null);
-			navigate('/dashboard/masjid');
+			navigate('/m-admin/masjid');
 		} catch (error) {
 			// Handle errors
 			console.error('Error deleting data:', error);
@@ -126,23 +122,23 @@ const fetchMasjidData = async () => {
 	}
 	const viewMasjid = (masjidId) => {
 		console.log(`view Masjid: `, masjidId);
-		navigate(`/dashboard/masjid/view-masjid/${masjidId}`);
+		navigate(`/m-admin/masjid/view-masjid/${masjidId}`);
 	}
 	const editMasjidTimeTable = (masjidId) => {
 		console.log(`Edit Masjid TimeTable: `, masjidId)
-	  navigate(`/dashboard/masjid/edit-timetable/${masjidId}`);
+		navigate(`/m-admin/masjid/edit-timetable/${masjidId}`);
 	}
 	const addMasjidTimeTable = (masjidId) => {
 		console.log(`Add Masjid TimeTable: `, masjidId)
-		navigate(`/dashboard/masjid/add-timetable/${masjidId}`);
+		navigate(`/m-admin/masjid/add-timetable/${masjidId}`);
 	}
 
-	
+
 
 
 	return (
 		<>
-			<Link type='button' to='/dashboard/masjid/add-masjid' className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Add Masjid</Link>
+			<Link type='button' to='/m-admin/masjid/add-masjid' className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Add Masjid</Link>
 			<DataTable
 				title="Masjid Table"
 				columns={columns}
@@ -152,9 +148,9 @@ const fetchMasjidData = async () => {
 				responsive
 			/>
 			{/* Popup */}
-      {isPopupVisible && (
-        <DeleteConfirmation onConfirm={handleConfirmDelete} onCancel={handleCancelDelete} />
-      )}
+			{isPopupVisible && (
+				<DeleteConfirmation onConfirm={handleConfirmDelete} onCancel={handleCancelDelete} />
+			)}
 		</>
 	);
 }

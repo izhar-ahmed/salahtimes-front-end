@@ -35,8 +35,8 @@ const AdminNavigation = () => {
                 </Link>
                 <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
                     <NavLink className={({ isActive }) => isActive ? "bg-green-500 mr-1 text-white py-1 px-3 border-0 rounded" : "mr-5 hover:bg-green-500 hover:text-white py-1 px-3 border-0 rounded"} to="masjid" >Masjid</NavLink>
-                    <NavLink className="mr-5 hover:bg-green-500 hover:text-white py-1 px-3 border-0 rounded">User</NavLink>
-                    <NavLink className="mr-5 hover:bg-green-500 hover:text-white py-1 px-3 border-0 rounded">Logs</NavLink>
+                    <NavLink className="mr-5 hover:bg-green-500 hover:text-white py-1 px-3 border-0 rounded" to="users">User</NavLink>
+                    <NavLink className="mr-5 hover:bg-green-500 hover:text-white py-1 px-3 border-0 rounded" to="logs">Logs</NavLink>
                 </nav>
                 <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" onClick={handleLogout}>Logout
                     <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-1" viewBox="0 0 24 24">

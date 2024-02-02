@@ -43,7 +43,7 @@ const MasjidForm = () => {
 	
 			if (response.status >= 200 && response.status < 300) {
 				console.log("Masjid form submitted successfully");
-				navigate('/dashboard/masjid');
+				navigate('/m-admin/masjid');
 			} else {
 				console.log("Error while submitting masjid form");
 			}
