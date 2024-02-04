@@ -4,6 +4,7 @@ import axios from 'axios';
 import './MasjidTable.css'
 import { Link, useNavigate } from 'react-router-dom';
 import DeleteConfirmation from './DeleteConfirmation';
+import { PlusIcon } from '@heroicons/react/24/solid';
 
 const MasjidTable = () => {
 	const [masjidData, setMasjidData] = useState([])
@@ -57,24 +58,24 @@ const MasjidTable = () => {
 				<>
 					{row.ids.length === 1 ? (
 						<>
-							<button className='mr-3' onClick={() => { addMasjidTimeTable(row.masjidId) }}>Add Timetable</button>
-							<button className='mr-3' onClick={() => { editMasjid(row.masjidId) }}>Edit</button>
-							<button className='mr-3' onClick={() => { handleDeleteClick(row.masjidId) }}>Delete</button>
-							<button className='mr-3' onClick={() => { viewMasjid(row.masjidId) }}>View</button>
+							<button className='px-4 py-2 bg-blue-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-blue-700 mr-1' onClick={() => { addMasjidTimeTable(row.masjidId) }}>Add Timetable</button>
+							<button className='px-4 py-2 bg-blue-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-blue-700 mr-1' onClick={() => { editMasjid(row.masjidId) }}>Edit</button>
+							<button className='px-4 py-2 bg-red-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-red-700 mr-1' onClick={() => { handleDeleteClick(row.masjidId) }}>Delete</button>
+							<button className='px-4 py-2 bg-blue-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-blue-700' onClick={() => { viewMasjid(row.masjidId) }}>View</button>
 						</>
 					) : (
 						<>
-							<button className='mr-3' onClick={() => { editMasjidTimeTable(row.masjidId) }}>Edit Timetable</button>
-							<button className='mr-3' onClick={() => { editMasjid(row.masjidId) }}>Edit</button>
-							<button className='mr-3' onClick={() => { handleDeleteClick(row.masjidId) }}>Delete</button>
-							<button className='mr-3' onClick={() => { viewMasjid(row.masjidId) }}>View</button>
+							<button className='px-4 py-2 bg-blue-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-blue-700 mr-1' onClick={() => { editMasjidTimeTable(row.masjidId) }}>Edit Timetable</button>
+							<button className='px-4 py-2 bg-blue-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-blue-700 mr-1' onClick={() => { editMasjid(row.masjidId) }}>Edit</button>
+							<button className='px-4 py-2 bg-red-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-red-700 mr-1' onClick={() => { handleDeleteClick(row.masjidId) }}>Delete</button>
+							<button className='px-4 py-2 bg-blue-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-blue-700' onClick={() => { viewMasjid(row.masjidId) }}>View</button>
 						</>
 					)}
 				</>
 			),
 			ignoreRowClick: true,
 			button: true,
-			width: '300px',
+			width: '400px',
 		},
 	];
 
@@ -138,7 +139,10 @@ const MasjidTable = () => {
 
 	return (
 		<>
-			<Link type='button' to='/m-admin/masjid/add-masjid' className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Add Masjid</Link>
+			<Link type='button' to='/m-admin/masjid/add-masjid' className="px-4 py-2 bg-green-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-green-700">
+				<PlusIcon className='h-5 w-5 text-white-500 inline pb-1' />
+				Add Masjid
+			</Link>
 			<DataTable
 				title="Masjid Table"
 				columns={columns}
@@ -156,3 +160,5 @@ const MasjidTable = () => {
 }
 
 export default MasjidTable;
+
+// API key : AIzaSyDWDpwOmj_So3TeKKeZYVBf8aUIsBboShE

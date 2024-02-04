@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import DeleteConfirmation from '../../components/admin/DeleteConfirmation';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { async } from 'q';
+import { PlusIcon } from '@heroicons/react/24/solid'
 
 const Users = () => {
   const [users, setUsers] = useState([])
@@ -37,10 +37,10 @@ const Users = () => {
       name: 'Actions',
       cell: row => (
         <div className="flex space-x-2">
-          <button className="text-blue-500" onClick={() => handleEditUser(row.id)}>
+          <button className="px-4 py-2 bg-blue-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-blue-700" onClick={() => handleEditUser(row.id)}>
             Edit
           </button>
-          <button className="text-red-500" onClick={() => handleDeleteUser(row)}>
+          <button className="px-4 py-2 bg-red-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-red-700" onClick={() => handleDeleteUser(row)}>
             Delete
           </button>
         </div>
@@ -58,7 +58,7 @@ const Users = () => {
     setDeleteConfirmationVisible(true);
   };
 
-  const handleConfirmDelete = async() => {
+  const handleConfirmDelete = async () => {
     // Perform delete action here 
     try {
       const token = localStorage.getItem('token');
@@ -73,7 +73,7 @@ const Users = () => {
       });
 
       // Handle the response as needed
-       fetchUserData();
+      fetchUserData();
 
       // For now, let's just close the confirmation modal
       setDeleteConfirmationVisible(false);
@@ -97,7 +97,7 @@ const Users = () => {
       await fetchUserData();
 
     }
-     fetchData();
+    fetchData();
   }, []);
 
   const fetchUserData = async () => {
@@ -118,7 +118,9 @@ const Users = () => {
   // For now, let's use sample data
   return (
     <div>
-      <Link type='button' to='/m-admin/user/add-user' className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Add User</Link>
+      <Link type='button' to='/m-admin/user/add-user' className="px-4 py-2 bg-green-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-green-700">
+        <PlusIcon className='h-5 w-5 text-white-500 inline pb-1' />
+        Add User</Link>
       <DataTable
         title="Users"
         columns={columns}

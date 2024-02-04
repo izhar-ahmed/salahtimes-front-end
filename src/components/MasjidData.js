@@ -1,45 +1,7 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
-const MasjidData = () => {
-  const { masjidId } = useParams();
-  const [masjid, setMasjid] = useState({});
-  const [namazTime, setNamazTime] = useState([]);
-
-
-
-
-
-  useEffect(() => {
-
-    const masjidApi = `http://localhost:8080/api/masjid/${masjidId}`;
-    const namazTimeApi = `http://localhost:8080/api/namaz-time/${masjidId}`
-    axios
-      .get(masjidApi)
-      .then((response) => {
-        setMasjid(response.data.masjid);
-
-        // If masjid is not found
-      })
-      .catch((error) => {
-        console.error("Error fetching masjid by id:", error);
-      });
-
-    // call namaz time api
-    axios
-      .get(namazTimeApi)
-      .then((response) => {
-        setNamazTime(response.data.namazTimeTable);
-
-        // If masjid is not found
-      })
-      .catch((error) => {
-        console.error("Error fetching masjid by id:", error);
-      });
-
-  }, []);
-
+// MasjidData.js
+// import MasjidMap from "./MasjidMap";
+const MasjidData = ({masjid, namazTime, loading, error}) => {
+  
   return (
     <div className="container mx-auto">
       <div className="flex flex-wrap">
@@ -73,6 +35,7 @@ const MasjidData = () => {
             </div>
           )}
         </div>
+        {/* <MasjidMap masjidGoogleMapLink={masjid.masjidGoogleMapLink} apiKey="AIzaSyDZ_YQUDSWfdq-QdcVoXqTU7hMGY6SR5wk"/> */}
       </div>
     </div>
   );
