@@ -11,9 +11,9 @@ const EditUser = () => {
 	
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-4">Edit User</h2>
+    <div className="flex flex-col">
+      <div style={{ fontWeight: "400" }} className='evaFvq'>Edit User</div>
+      <div className="bg-white p-8 rounded shadow-md w-1/3">
         {error && <p>Error: {error}</p>}
         <form onSubmit={formik.handleSubmit}>
           <div className="mb-4">

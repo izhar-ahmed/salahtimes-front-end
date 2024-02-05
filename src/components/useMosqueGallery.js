@@ -11,10 +11,6 @@ const useMosqueGallery = () => {
 		// Replace this with your actual API call
 		const fetchMosques = async () => {
 			try {
-				// Fetch data from your API endpoint
-				// const response = await fetch('your_api_endpoint');
-				// const data = await response.json();
-
 				// For now, let's use sample data
 				const response = await axios.get("http://localhost:8080/api/masjid")
 				setMosques(response.data.masjidWithNamazIds)

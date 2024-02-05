@@ -8,4 +8,4 @@ const ViewMasjid = () => {
 	);
 }
 
-export default ViewMasjid;
+export default ViewMasjid; 

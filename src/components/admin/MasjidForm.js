@@ -9,7 +9,7 @@ const MasjidForm = () => {
   const [masjidImage, setMasjidImage] = useState('');
   const [masjidMapLink, setMasjidMapLink] = useState('');
 
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleImageChange = (e) => {
     // Handle image file change
@@ -18,52 +18,53 @@ const MasjidForm = () => {
   };
 
   const handleSubmit = async (e) => {
-		e.preventDefault();
-		const token = localStorage.getItem('token');
+    e.preventDefault();
+    const token = localStorage.getItem('token');
     console.log(token);
-		// Validate the input (you can add more complex validation if needed)
-	
-		// Create a new FormData object to handle file upload
-		const formData = new FormData();
-		formData.append('masjidName', masjidName);
-		formData.append('masjidArea', masjidArea);
-		formData.append('masjidAddress', masjidAddress);
-		formData.append('masjidPhoto', masjidImage);
-		formData.append('masjidGoogleMapLink', masjidMapLink);
-	
-		// Pass the FormData object to the parent component
-		const createMasjid = 'http://localhost:8080/api/masjid/add';
-		try {
-			const response = await axios.post(createMasjid, formData, {
-				headers: {
-					'Content-Type': 'multipart/form-data',
-					'Authorization': `Bearer ${token}`,
-				},
-			});
-	
-			if (response.status >= 200 && response.status < 300) {
-				console.log("Masjid form submitted successfully");
-				navigate('/m-admin/masjid');
-			} else {
-				console.log("Error while submitting masjid form");
-			}
-	
-			// Clear the form fields after submission
-			setMasjidName('');
-			setMasjidArea('');
-			setMasjidAddress('');
-			setMasjidImage(null); // Reset the file input
-			setMasjidMapLink('');
-		} catch (error) {
-			console.error("Error:", error);
-		}
-	};
-	
+    // Validate the input (you can add more complex validation if needed)
+
+    // Create a new FormData object to handle file upload
+    const formData = new FormData();
+    formData.append('masjidName', masjidName);
+    formData.append('masjidArea', masjidArea);
+    formData.append('masjidAddress', masjidAddress);
+    formData.append('masjidPhoto', masjidImage);
+    formData.append('masjidGoogleMapLink', masjidMapLink);
+
+    // Pass the FormData object to the parent component
+    const createMasjid = 'http://localhost:8080/api/masjid/add';
+    try {
+      const response = await axios.post(createMasjid, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.status >= 200 && response.status < 300) {
+        console.log("Masjid form submitted successfully");
+        navigate('/m-admin/masjid');
+      } else {
+        console.log("Error while submitting masjid form");
+      }
+
+      // Clear the form fields after submission
+      setMasjidName('');
+      setMasjidArea('');
+      setMasjidAddress('');
+      setMasjidImage(null); // Reset the file input
+      setMasjidMapLink('');
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-4">Add Masjid</h2>
+    <div className="flex flex-col">
+      <div style={{fontWeight: "400"}} className='evaFvq'>Add Masjid</div>
+      <div className="bg-white p-8 rounded shadow-md w-1/3">
+        
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-600">Masjid Name:</label>
@@ -127,7 +128,7 @@ const MasjidForm = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+            className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
           >
             Add Masjid
           </button>

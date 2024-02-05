@@ -80,9 +80,10 @@ const EditMasjidForm = ({masjidId}) => {
 	};
 
 	return (
-		<div className="min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-4">Edit Masjid</h2>
+		<div className="flex flex-col">
+      <div style={{fontWeight: "400"}} className='evaFvq'>Edit Masjid</div>
+      <div className="bg-white p-8 rounded shadow-md w-1/3">
+        
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-600">Masjid Name:</label>
@@ -140,7 +141,7 @@ const EditMasjidForm = ({masjidId}) => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+            className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
           >
             Add Masjid
           </button>

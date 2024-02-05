@@ -103,14 +103,14 @@ const EditTimeTableForm = ({ masjidId }) => {
 
 	return (
 		<>
-			<div className="flex w-[100%]">
+			<div className="container mx-auto">
+			<div style={{fontWeight: "400"}} className='evaFvq'>Edit Namaz Time</div>
 				<form className="bg-white shadow-md rounded-md p-6" onSubmit={submitHandler}>
-					<h2 className="text-2xl font-bold mb-4">Namaz Time Form</h2>
 					{namazTimeTable.map((timetable, idx) => (
 						<div key={idx}>
 							{/* Namaz Name and Azaan Time in one line */}
-							<div className="flex justify-between mb-4">
-								<div className="w-1/5 mr-2">
+							<div className="flex justify-between mb-4 w-[50%]">
+								<div className="w-1/3 mr-2">
 									<label className="block text-sm font-semibold text-gray-600">
 										Namaz Name
 									</label>
@@ -118,7 +118,7 @@ const EditTimeTableForm = ({ masjidId }) => {
 										className="w-full block border rounded-md px-3 py-2 mt-1"
 									>{namazTimeTable[idx].namazName}</div>
 								</div>
-								<div className="w-1/5 mr-2">
+								<div className="w-1/3 mr-2">
 									<label className="block text-sm font-semibold text-gray-600">
 										Azaan Time
 									</label>
@@ -130,7 +130,7 @@ const EditTimeTableForm = ({ masjidId }) => {
 										required
 									/>
 								</div>
-								<div className="w-1/5 mr-2">
+								<div className="w-1/3 mr-2">
 									<label className="block text-sm font-semibold text-gray-600">
 										Jamaat Time
 									</label>
@@ -142,7 +142,10 @@ const EditTimeTableForm = ({ masjidId }) => {
 										required
 									/>
 								</div>
-								<div className="w-1/5 mr-2">
+								
+							</div>
+							<div className="flex mb-4 w-[50%]">
+							<div className="w-1/3 mr-2">
 									<label className="block text-sm font-semibold text-gray-600">
 										Start Time
 									</label>
@@ -153,7 +156,7 @@ const EditTimeTableForm = ({ masjidId }) => {
 										value={namazTimeTable[idx].startTime}
 									/>
 								</div>
-								<div className="w-1/5 mb-4">
+								<div className="w-1/3 mb-4">
 									<label className="block text-sm font-semibold text-gray-600">
 										End Time
 									</label>

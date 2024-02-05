@@ -1,41 +1,31 @@
 // MasjidData.js
-// import MasjidMap from "./MasjidMap";
-const MasjidData = ({masjid, namazTime, loading, error}) => {
-  
+import React from "react";
+
+const MasjidData = ({ masjid, namazTime, loading, error }) => {
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto my-5">
       <div className="flex flex-wrap">
-        <div className="lg:w-1/2"></div>
-        <div className="max-w-md lg:w-1/2 mt-8 p-4">
-          { namazTime.length === 0 ? (
+        <div className="w-full p-4">
+          {namazTime.length === 0 ? (
             <div className="text-center">
-              <h1 className="text-4xl font-bold">Add namaz time table for this masjid</h1>
+              <h1 className="text-2xl font-bold">Add namaz time table for this masjid</h1>
             </div>
           ) : (
-            <div key={masjid.masjidId} className="mb-8">
-              <h2 className="text-2xl text-center font-bold mb-4">{masjid.masjidName}</h2>
-              <table className="min-w-full bg-white border border-gray-300 rounded-md">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th className="py-2 px-4 border-b">Prayer</th>
-                    <th className="py-2 px-4 border-b">Azaan Time</th>
-                    <th className="py-2 px-4 border-b">Jamaat Time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {namazTime.map((prayer) => (
-                    <tr key={prayer.id}>
-                      <td className="py-2 px-4 border-b">{prayer.namazName}</td>
-                      <td className="py-2 px-4 border-b">{prayer.azaanTime}</td>
-                      <td className="py-2 px-4 border-b">{prayer.jamaatTime}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div key={masjid.masjidId} className="mb-8 mt-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+                {namazTime.map((prayer) => (
+                  <div key={prayer.id} className={prayer.selected ? "bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 p-4 rounded-md shadow-md border border-white-300 text-white selected" : "bg-white p-4 rounded-md shadow-md border border-gray-300"}>
+                    {prayer.selected ? <p>Upcoming Prayer</p> : ''}
+                    <p className="font-bold text-lg mb-2">{prayer.namazName}</p>
+                    <p className="text-sm">Azaan Time: {prayer.azaanTime}</p>
+                    <p className="text-sm">Jamaat Time: {prayer.jamaatTime}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
-        {/* <MasjidMap masjidGoogleMapLink={masjid.masjidGoogleMapLink} apiKey="AIzaSyDZ_YQUDSWfdq-QdcVoXqTU7hMGY6SR5wk"/> */}
+        <div className="flex"></div> 
       </div>
     </div>
   );

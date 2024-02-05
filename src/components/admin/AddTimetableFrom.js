@@ -63,11 +63,11 @@ const AddTimeTableForm = ({ masjidId }) => {
 		const createNamazTimeApi = `http://localhost:8080/api/namaz-time/add`;
 		const response = await axios.post(createNamazTimeApi, namazTimeTable, {
 			headers: {
-	  			'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${token}`,
 			},
 		});
-		if(response.status >= 200 && response.status <= 300){
+		if (response.status >= 200 && response.status <= 300) {
 			console.log("Masjid time table form submitted successfully.");
 			navigate('/m-admin/masjid');
 		} else {
@@ -91,14 +91,14 @@ const AddTimeTableForm = ({ masjidId }) => {
 
 	return (
 		<>
-			<div className="flex w-[100%]">
+			<div className="container mx-auto">
+			<div style={{fontWeight: "400"}} className='evaFvq'>Add Namaz Time</div>
 				<form className="bg-white shadow-md rounded-md p-6" onSubmit={submitHandler}>
-					<h2 className="text-2xl font-bold mb-4">Namaz Time Form</h2>
 					{namazTimeTable.map((timetable, idx) => (
 						<div key={idx}>
 							{/* Namaz Name and Azaan Time in one line */}
-							<div className="flex justify-between mb-4">
-								<div className="w-1/5 mr-2">
+							<div className="flex justify-between mb-4 w-[50%]">
+								<div className="mr-2 w-1/3">
 									<label className="block text-sm font-semibold text-gray-600">
 										Namaz Name
 									</label>
@@ -106,7 +106,7 @@ const AddTimeTableForm = ({ masjidId }) => {
 										className="w-full block border rounded-md px-3 py-2 mt-1"
 									>{namazTimeTable[idx].namazName}</div>
 								</div>
-								<div className="w-1/5 mr-2">
+								<div className="mr-2 w-1/3">
 									<label className="block text-sm font-semibold text-gray-600">
 										Azaan Time
 									</label>
@@ -118,7 +118,7 @@ const AddTimeTableForm = ({ masjidId }) => {
 										required
 									/>
 								</div>
-								<div className="w-1/5 mr-2">
+								<div className="mr-2 w-1/3">
 									<label className="block text-sm font-semibold text-gray-600">
 										Jamaat Time
 									</label>
@@ -129,7 +129,10 @@ const AddTimeTableForm = ({ masjidId }) => {
 										required
 									/>
 								</div>
-								<div className="w-1/5 mr-2">
+								
+							</div>
+							<div className="flex mb-4 w-[50%]"> 
+							<div className="mr-2 w-1/3">
 									<label className="block text-sm font-semibold text-gray-600">
 										Start Time
 									</label>
@@ -139,7 +142,7 @@ const AddTimeTableForm = ({ masjidId }) => {
 										onChange={(e) => fieldValueUpdate(e, idx, 'startTime')}
 									/>
 								</div>
-								<div className="w-1/5 mb-4">
+								<div className="mb-4 w-1/3">
 									<label className="block text-sm font-semibold text-gray-600">
 										End Time
 									</label>

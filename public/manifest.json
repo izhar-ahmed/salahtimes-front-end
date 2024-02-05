@@ -1,0 +1,19 @@
+{
+  "name": "Mosque Time Table",
+  "short_name": "Masjid Timetable",
+  "description": "An app to view and manage mosque prayer timings.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a202c",
+  "icons": [
+    {
+      "src": "/logo192.png",
+      "sizes": "47x40",
+      "type": "image/png"
+    }
+  ],
+  "splash_pages": null,
+  "scope": "/",
+  "orientation": "portrait"
+}
