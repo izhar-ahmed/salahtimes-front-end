@@ -16,15 +16,27 @@ import Users from "./pages/admin/Users";
 import Logs from "./pages/admin/Logs";
 import AddUser from "./pages/admin/AddUser";
 import EditUser from "./pages/admin/EditUser";
+import NotFound from "./pages/NotFound";
+import Contact from "./pages/Contact";
+import About from "./pages/About";
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
+    errorElement: <NotFound />,
     children: [
       {
         path: '/',
         element: <Home />
+      },
+      {
+        path: '/contact',
+        element: <Contact />
+      },
+      {
+        path: '/about',
+        element: <About />
       },
       {
         path: '/masjid/:masjidId',
@@ -33,7 +45,7 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: '/m-admin',
+    path: '/login',
     element: <Login />
   },
   {
@@ -41,7 +53,7 @@ const router = createBrowserRouter([
     element: <ProtectedRoute><AdminLayout /></ProtectedRoute>,
     children: [
       {
-        path: 'dashboard',
+        path: '',
         element: <Dashboard />
       },
       {
@@ -73,17 +85,18 @@ const router = createBrowserRouter([
         element: <Users />
       },
       {
-        path: 'user/add-user',
+        path: 'users/add-user',
         element: <AddUser />
       },
       {
-        path: 'user/edit-user/:userId',
+        path: 'users/edit-user/:userId',
         element: <EditUser />
       },
       {
         path: 'logs',
         element: <Logs />
       },
+      
     ]
   }
 ]);

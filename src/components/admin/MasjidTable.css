@@ -1,5 +1,5 @@
 .rdt_Table{
-	border: 1px solid #eee;
+	border: 1px solid rgba(0,0,0,.12);
 }
 .rdt_TableRow{}
 .rdt_TableCol{}
@@ -9,7 +9,7 @@
 .rdt_TableFooter{}
 .rdt_TableHead{}
 .rdt_TableHeadRow{
-	background-color: rgba(236,239,241,.5) !important;
+	background-color: rgba(236,239,241,1) !important;
 	padding: 1rem;
 	border-bottom-width: 1px;
 	border-top-width: 1px;

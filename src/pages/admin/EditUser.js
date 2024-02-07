@@ -74,7 +74,7 @@ const EditUser = () => {
                     onBlur={formik.handleBlur}
                     checked={formik.values.roleIds.includes(role.id)}
                   />
-                  {role.name}
+                  &nbsp;{role.name}
                 </label>
               ))}
             </div>
@@ -83,8 +83,8 @@ const EditUser = () => {
             )}
           </div>
 
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded" disabled={loading}>
-            {loading ? 'Updating...' : 'Update User'}
+          <button type="submit" className="rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" disabled={loading}>
+            {loading ? 'Saving...' : 'Save'}
           </button>
         </form>
       </div>

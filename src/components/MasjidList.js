@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useMosqueGallery from './useMosqueGallery';
+import '../pages/Common.css'
 
 const MasjidList = () => {
   const { mosques, loading } = useMosqueGallery();
@@ -42,21 +43,21 @@ const MasjidList = () => {
           className="p-2 w-[30%] border rounded"
           id="search"
         /> */}
-      
-      <form>
-        <label htmlFor="search" class="mb-2 text-sm font-medium text-gray-900 sr-only light:text-white">Search</label>
-        <div className="relative">
-          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-            <svg className="w-4 h-4 text-gray-500 light:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-            </svg>
+
+        <form>
+          <label htmlFor="search" className="mb-2 text-sm font-medium text-gray-900 sr-only light:text-white">Search</label>
+          <div className="relative">
+            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg className="w-4 h-4 text-gray-500 light:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+              </svg>
+            </div>
+            <input type="search" id="search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-gray-500 focus:border-gray-500 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white" placeholder="Search By Area"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
-          <input type="search" id="search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-gray-500 focus:border-gray-500 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white" placeholder="Search By Area"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-      </form>
+        </form>
       </div>
 
 
@@ -65,21 +66,25 @@ const MasjidList = () => {
         {paginatedMosques.map((mosque) => (
           <div
             key={mosque.masjidId}
-            className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300"
+            className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition duration-300"
           >
             <img
               src={imgUrl + mosque.masjidPhoto}
               alt={mosque.masjidName}
               className="w-full h-48 object-cover"
             />
-            <div className="p-4">
-              <h3 className="text-xl font-semibold text-gray-800 uppercase">{mosque.masjidName}</h3>
-              <p className="text-gray-600 mb-4 uppercase">{mosque.masjidAddress}</p>
-              <div className="flex items-center justify-between">
-                <Link to={`masjid/${mosque.masjidId}`} className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            <div className="p-4 relative h-[150px]">
+              <Link to={`masjid/${mosque.masjidId}`} className="text-xl font-semibold text-gray-800 item-link">{mosque.masjidName}</Link>
+                <span className="px-3 py-1 bg-neutral-200 text-xs rounded-3xl ml-2">{mosque.masjidArea}</span>
+              <p className="text-gray-600 mb-4 text-sm">{mosque.masjidAddress}</p>
+              <div className="w-full">
+                <Link to={`masjid/${mosque.masjidId}`} className="group btn bg-primary-light-950 dark:bg-primary-dark-950 rounded-full px-4 py-1.5 text-sm text-white dark:text-white inline">
                   View Details
                 </Link>
-                <span className="text-gray-500 uppercase">{mosque.masjidArea}</span>
+
+                {/* <div className="px-3 py-1 bg-neutral-200 dark:bg-neutral-dark-200 rounded-3xl border border-neutral-200 dark:border-neutral-dark-300 inline"> */}
+                  {/* <span className="text-neutral-900 dark:text-neutral-dark-950 text-xs font-medium leading-none"></span> */}
+                {/* </div> */}
               </div>
             </div>
           </div>

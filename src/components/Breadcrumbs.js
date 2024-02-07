@@ -19,7 +19,7 @@ const Breadcrumbs = () => {
   }, [location.pathname]);
 
   return (
-    <nav aria-label="Breadcrumb" className="flex mb-5">
+    <nav aria-label="Breadcrumb" className="flex mb-10">
       <ol className="flex overflow-hidden rounded-lg border border-gray-200 text-gray-600">
         {breadcrumbs.map((breadcrumb, index) => (
           <li key={index} className={`relative flex items-center ${index !== 0 ? 'ms-1.5' : ''}`}>

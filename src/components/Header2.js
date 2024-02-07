@@ -1,7 +1,6 @@
 import React from 'react';
-import DigitalClock from './DigitalClock';
 
-const Header = ({ heading, subHeading }) => { 
+const Header2 = ({ heading, subHeading }) => {
 	return (
 		<div className="relative isolate px-6 lg:px-8 overflow-hidden">
 			<div className="absolute inset-x-0 -top-40 -z-10 transform-gpu blur-3xl sm:-top-80" ariaHidden="true">
@@ -13,16 +12,13 @@ const Header = ({ heading, subHeading }) => {
 			</div>
 			<div className="mx-auto max-w-2xl py-16 sm:py-16 lg:py-16">
 				<div className="text-center">
-					<h1 className="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-neutral-950 dark:text-neutral-dark-950 mb-0">
-						{heading}
-					</h1>
+					
+						{heading} 
+					
 					{/* <h2 class="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-neutral-950 dark:text-neutral-dark-950 mb-0"><span class="font-light">Let's</span> explore, share, and inspire <span class="font-light">together!</span></h2> */}
 					<p className="mt-6 text-lg font-bold text-neutral-700">
 						{subHeading}
 					</p>
-					<div className="mt-2 text-4xl leading-8 text-gray-900 uppercase">
-						<DigitalClock />
-					</div>
 				</div>
 			</div>
 			<div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
@@ -37,4 +33,4 @@ const Header = ({ heading, subHeading }) => {
 	);
 };
 
-export default Header;
+export default Header2;

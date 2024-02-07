@@ -37,10 +37,10 @@ const Users = () => {
       name: 'Actions',
       cell: row => (
         <div className="flex space-x-2">
-          <button className="px-4 py-2 bg-blue-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-blue-700" onClick={() => handleEditUser(row.id)}>
+          <button className="px-4 py-1.5 rounded-md bg-indigo-600 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={() => handleEditUser(row.id)}>
             Edit
           </button>
-          <button className="px-4 py-2 bg-red-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-red-700" onClick={() => handleDeleteUser(row)}>
+          <button className="px-4 py-1.5 rounded-md bg-indigo-600 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={() => handleDeleteUser(row)}>
             Delete
           </button>
         </div>
@@ -50,7 +50,7 @@ const Users = () => {
 
   const handleEditUser = (userId) => {
     // Redirect to edit user page
-    navigate(`/m-admin/user/edit-user/${userId}`);
+    navigate(`/m-admin/users/edit-user/${userId}`);
   };
 
   const handleDeleteUser = (user) => {
@@ -118,7 +118,7 @@ const Users = () => {
   // For now, let's use sample data
   return (
     <div>
-      <Link type='button' to='/m-admin/user/add-user' className="px-4 py-2 bg-green-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-green-700">
+      <Link type='button' to='/m-admin/users/add-user' className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
         <PlusIcon className='h-5 w-5 text-white-500 inline pb-1' />
         Add User</Link>
       <DataTable

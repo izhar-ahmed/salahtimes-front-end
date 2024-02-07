@@ -58,17 +58,17 @@ const MasjidTable = () => {
 				<>
 					{row.ids.length === 1 ? (
 						<>
-							<button className='px-4 py-2 bg-blue-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-blue-700 mr-1' onClick={() => { addMasjidTimeTable(row.masjidId) }}>Add Timetable</button>
-							<button className='px-4 py-2 bg-blue-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-blue-700 mr-1' onClick={() => { editMasjid(row.masjidId) }}>Edit</button>
-							<button className='px-4 py-2 bg-red-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-red-700 mr-1' onClick={() => { handleDeleteClick(row.masjidId) }}>Delete</button>
-							<button className='px-4 py-2 bg-blue-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-blue-700' onClick={() => { viewMasjid(row.masjidId) }}>View</button>
+							<button className='px-5 py-2 rounded-md bg-indigo-600 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mr-1' onClick={() => { addMasjidTimeTable(row.masjidId) }}>Add Timetable</button>
+							<button className='px-5 py-2 rounded-md bg-indigo-600 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mr-1' onClick={() => { editMasjid(row.masjidId) }}>Edit</button>
+							<button className='px-5 py-2 rounded-md bg-indigo-600 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mr-1' onClick={() => { handleDeleteClick(row.masjidId) }}>Delete</button>
+							<button className='px-5 py-2 rounded-md bg-indigo-600 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' onClick={() => { viewMasjid(row.masjidId) }}>View</button>
 						</>
 					) : (
 						<>
-							<button className='px-4 py-2 bg-blue-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-blue-700 mr-1' onClick={() => { editMasjidTimeTable(row.masjidId) }}>Edit Timetable</button>
-							<button className='px-4 py-2 bg-blue-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-blue-700 mr-1' onClick={() => { editMasjid(row.masjidId) }}>Edit</button>
-							<button className='px-4 py-2 bg-red-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-red-700 mr-1' onClick={() => { handleDeleteClick(row.masjidId) }}>Delete</button>
-							<button className='px-4 py-2 bg-blue-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-blue-700' onClick={() => { viewMasjid(row.masjidId) }}>View</button>
+							<button className='px-5 py-2 rounded-md bg-indigo-600 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mr-1' onClick={() => { editMasjidTimeTable(row.masjidId) }}>Edit Timetable</button>
+							<button className='px-5 py-2 rounded-md bg-indigo-600 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mr-1' onClick={() => { editMasjid(row.masjidId) }}>Edit</button>
+							<button className='px-5 py-2 rounded-md bg-indigo-600 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mr-1' onClick={() => { handleDeleteClick(row.masjidId) }}>Delete</button>
+							<button className='px-5 py-2 rounded-md bg-indigo-600 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' onClick={() => { viewMasjid(row.masjidId) }}>View</button>
 						</>
 					)}
 				</>
@@ -138,8 +138,8 @@ const MasjidTable = () => {
 
 
 	return (
-		<>
-			<Link type='button' to='/m-admin/masjid/add-masjid' className="px-4 py-2 bg-green-500 text-white rounded-lg transition duration-300 ease-in-out hover:bg-green-700">
+		<div>
+			<Link type='button' to='/m-admin/masjid/add-masjid' className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
 				<PlusIcon className='h-5 w-5 text-white-500 inline pb-1' />
 				Add Masjid
 			</Link>
@@ -155,7 +155,7 @@ const MasjidTable = () => {
 			{isPopupVisible && (
 				<DeleteConfirmation onConfirm={handleConfirmDelete} onCancel={handleCancelDelete} />
 			)}
-		</>
+		</div>
 	);
 }
 

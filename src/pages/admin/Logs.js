@@ -22,6 +22,7 @@ const Logs = () => {
       sortable: true,
     },
     {
+      id: 'createdAt',
       name: 'Created At',
       selector: (row) => row.createdAt,
       sortable: true,
@@ -45,6 +46,8 @@ const Logs = () => {
         data={logs}
         pagination
         highlightOnHover
+        defaultSortFieldId='createdAt'
+        defaultSortAsc={false}
         responsive
       />
     </div>

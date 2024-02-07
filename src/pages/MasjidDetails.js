@@ -24,6 +24,8 @@ const MasjidDetails = () => {
     };
 
     useEffect(() => {
+        window.scrollTo(0, 0)
+
         const MASJID_API_URL = `http://localhost:8080/api/masjid/${masjidId}`;
 
         if (cancelToken) {
@@ -112,7 +114,7 @@ const MasjidDetails = () => {
     return (
         <>
             <Header
-                heading={`Explore ${masjid.masjidName} Details`}
+                heading={<h1 className="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-grey mb-0">Explore {masjid.masjidName} <span className="font-light">Details</span></h1>} 
                 subHeading={`ADDRESS: ${masjid.masjidAddress}`}
             />
 
@@ -124,8 +126,8 @@ const MasjidDetails = () => {
             />
 
             <CustomCTASection
-                heading={`Explore Mosque Locations`}
-                subheading={`Find the Right Direction for Prayer`}
+                heading= {<h2 className="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-white mb-0"><span className="font-light">Let's</span> Explore The Mosque Locations <span class="font-light">together!</span></h2>}
+                subheading={<p className="text-lg font-medium text-white">Find the Right Direction for Prayer.</p>}
                 exploreLabel="Explore Mosques"
                 directionsLabel="Get Directions"
             />
@@ -133,7 +135,7 @@ const MasjidDetails = () => {
                 src={masjid.masjidGoogleMapLink}
                 width="600"
                 height="450"
-                style={{ border: 0, width: "100%", marginBottom: '30px' }}
+                style={{ border: 0, width: "100%", height: "600px", marginBottom: '30px' }}
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

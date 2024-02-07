@@ -32,10 +32,10 @@ const LoginForm = () => {
         console.log(`authToken: `, authToken);
         if (!authToken) {
           console.log('token is invalid');
-          navigate('/m-admin');
+          navigate('/login');
         }
         localStorage.setItem('token', authToken);
-        navigate('/m-admin/dashboard');
+        navigate('/m-admin');
       } catch (error) {
         console.error('Login failed:', error.message);
         // Handle login failure (show an error message, etc.)

@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-
+import logo from '../img/mark-logo.svg'
 const navigation = [
-    { name: 'About', href: '#' },
-    { name: 'Explore Mosques', href: '#' },
-    { name: 'Contact', href: '#' },
-    { name: 'Marketplace', href: '#' },
+    { name: 'About', href: '/about' },
+    { name: 'Explore Mosques', href: '/explore' },
+    { name: 'Contact', href: '/contact' },
+    { name: 'Marketplace', href: '/market' },
 ]
 
 const MainNavigation = () => {
@@ -29,7 +29,7 @@ const MainNavigation = () => {
                             <span className="sr-only">Your Company</span>
                             <img
                                 className="h-8 w-auto"
-                                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                                src={logo}
                                 alt=""
                             />
                         </Link>
@@ -46,9 +46,14 @@ const MainNavigation = () => {
                     </div>
                     <div className="hidden lg:flex lg:gap-x-12">
                         {navigation.map((item) => (
-                            <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900">
+                            <NavLink
+                                key={item.name}
+                                to={item.href}
+                                className={({isActive}) => isActive ? "text-gray-900 p-2 text-lg font-medium leading-28 underline hover:underline" : "text-gray-900 p-2 text-lg font-medium leading-28 hover:underline"} // Add hover effect
+                                style={{textDecorationColor: '#6366F1', textDecorationThickness: '3px'}}
+                            >
                                 {item.name}
-                            </a>
+                            </NavLink>
                         ))}
                     </div>
                     <div className="hidden lg:flex lg:flex-1 lg:justify-end"></div>
@@ -57,14 +62,14 @@ const MainNavigation = () => {
                     <div className="fixed inset-0 z-50" />
                     <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
                         <div className="flex items-center justify-between">
-                            <a href="#" className="-m-1.5 p-1.5">
+                            <Link to="/" className="-m-1.5 p-1.5">
                                 <span className="sr-only">Your Company</span>
                                 <img
                                     className="h-8 w-auto"
-                                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                                    src={logo}
                                     alt=""
                                 />
-                            </a>
+                            </Link>
                             <button
                                 type="button"
                                 className="-m-2.5 rounded-md p-2.5 text-gray-700"
@@ -78,13 +83,13 @@ const MainNavigation = () => {
                             <div className="-my-6 divide-y divide-gray-500/10">
                                 <div className="space-y-2 py-6">
                                     {navigation.map((item) => (
-                                        <a
+                                        <Link
                                             key={item.name}
-                                            href={item.href}
+                                            to={item.href}
                                             className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                                         >
                                             {item.name}
-                                        </a>
+                                        </Link>
                                     ))}
                                 </div>
                             </div>
@@ -109,11 +114,11 @@ const MainNavigation = () => {
                         </div>
                         <div className="mx-auto max-w-2xl py-20 sm:py-32 lg:py-16">
                             <div className="text-center">
-                                <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                                    Welcome to [Your App Name]
+                                <h1 class="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-grey mb-0">
+                                    Welcome To <span class="font-light">[Your App]</span>
                                 </h1>
-                                <p className="mt-6 text-lg leading-8 text-gray-600">
-                                    Discover the beauty of prayer and find the perfect time for Salah in your local mosques.
+                                <p className="mt-6 text-lg font-bold text-neutral-700">
+                                    Discover the beauty of prayer and find the perfect time for Salah
                                 </p>
                                 <div className="mt-10 flex items-center justify-center gap-x-6">
                                     <a
