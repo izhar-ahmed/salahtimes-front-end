@@ -109,7 +109,7 @@ const MasjidDetails = () => {
                 newCancelToken.cancel('Component unmounted.');
             }
         };
-    }, [masjidId]);
+    }, [cancelToken, masjidId]);
 
     return (
         <>
@@ -135,6 +135,7 @@ const MasjidDetails = () => {
                 src={masjid.masjidGoogleMapLink}
                 width="600"
                 height="450"
+                title={`${masjid.masjidName} Map`}
                 style={{ border: 0, width: "100%", height: "600px", marginBottom: '30px' }}
                 allowFullScreen=""
                 loading="lazy"

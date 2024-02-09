@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from './pages/Home';
 import RootLayout from "./pages/Root";
 import MasjidDetails from "./pages/MasjidDetails";
-import Login from "./pages/Login";
+import Login from "./pages/admin/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminLayout from "./pages/AdminRoot";
@@ -19,6 +19,10 @@ import EditUser from "./pages/admin/EditUser";
 import NotFound from "./pages/NotFound";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
+import NotFound2 from "./pages/NotFound2";
+import ForgotPassword from "./pages/admin/ForgotPassword.";
+import ResetPassword from "./pages/admin/ResetPassword";
+import UserProfilePage from "./pages/admin/Profile";
 
 const router = createBrowserRouter([
   {
@@ -45,8 +49,16 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: '/login',
+    path: '/m-admin/login',
     element: <Login />
+  },
+  {
+    path: '/m-admin/forgot-password',
+    element: <ForgotPassword />
+  },
+  {
+    path: '/m-admin/reset-password/:code',
+    element: <ResetPassword />
   },
   {
     path: '/m-admin',
@@ -85,6 +97,10 @@ const router = createBrowserRouter([
         element: <Users />
       },
       {
+        path: 'user-profile',
+        element: <UserProfilePage />
+      },
+      {
         path: 'users/add-user',
         element: <AddUser />
       },
@@ -96,6 +112,10 @@ const router = createBrowserRouter([
         path: 'logs',
         element: <Logs />
       },
+      {
+        path: '*',
+        element: <NotFound2 />,
+      }
       
     ]
   }

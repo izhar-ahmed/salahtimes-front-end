@@ -33,7 +33,7 @@ const MainFooter = () => {
           <p className="text-sm text-neutral-700 dark:text-neutral-dark-700">
             © 2024. Designed by{" "}
             <a
-              href=""
+              href="https://github.com/izhar-ahmed"
               className="text-neutral-950 dark:text-neutral-dark-950"
             >
               Izhar Ahmed

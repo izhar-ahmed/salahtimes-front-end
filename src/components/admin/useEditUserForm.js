@@ -23,7 +23,7 @@ const useEditUserForm = (userId) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/users/${userId}`, {
+        const response = await axios.get(`http://localhost:8080/api/users/get-user/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

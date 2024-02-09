@@ -17,7 +17,7 @@ const AdminNavigation = () => {
             localStorage.removeItem('token');
 
             // Navigate to the login page
-            navigate('/m-admin');
+            navigate('/m-admin/login');
         } catch (error) {
             console.error('Logout Error:', error);
             // Handle error, e.g., show a message to the user 
@@ -27,7 +27,7 @@ const AdminNavigation = () => {
     return (
         <header className="text-gray body-font">
             <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-                <Link to='/m-admin/dashboard' className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+                <Link to='/m-admin' className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-10 h-10 text-white p-2 bg-indigo-600 rounded-full" viewBox="0 0 24 24">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
                     </svg>
@@ -37,6 +37,7 @@ const AdminNavigation = () => {
                     <NavLink className={({ isActive }) => isActive ? "bg-indigo-600 text-white mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded" : "mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded"} to="masjid" >Masjid</NavLink>
                     <NavLink className={({ isActive }) => isActive ? "bg-indigo-600 text-white mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded" : "mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded"} to="users">User</NavLink>
                     <NavLink className={({ isActive }) => isActive ? "bg-indigo-600 text-white mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded" : "mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded"} to="logs">Logs</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? "bg-indigo-600 text-white mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded" : "mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded"} to="user-profile">Profile</NavLink>
                 </nav>
                 <button className="inline-flex items-center bg-gray-100 border-0 py-2 px-4 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" onClick={handleLogout}>Logout
                     <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-1" viewBox="0 0 24 24">

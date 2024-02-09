@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import ForgotPasswordLink from './admin/ForgotPasswordLink';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -13,7 +14,8 @@ const LoginForm = () => {
       let response = await axios.post('http://localhost:8080/api/login', credential, headers);
       return response.data.token;
     } catch (error) {
-      return error;
+      console.error("error while login", error);
+      navigate('/m-admin/login');
     }
   };
 
@@ -29,13 +31,14 @@ const LoginForm = () => {
     onSubmit: async (values) => {
       try {
         const authToken = await signIn(values);
-        console.log(`authToken: `, authToken);
+        // console.log(`authToken: `, authToken);
         if (!authToken) {
-          console.log('token is invalid');
-          navigate('/login');
-        }
+          // console.log('token is invalid');
+          navigate('/m-admin/login');
+        } else {
         localStorage.setItem('token', authToken);
         navigate('/m-admin');
+        }
       } catch (error) {
         console.error('Login failed:', error.message);
         // Handle login failure (show an error message, etc.)
@@ -92,9 +95,11 @@ const LoginForm = () => {
                   <div className="text-red-500 text-sm">{formik.errors.password}</div>
                 ) : null}
               </div>
+              <ForgotPasswordLink />
               <button
                 type="submit"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
+                "
               >
                 Log in
               </button>
