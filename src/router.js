@@ -23,6 +23,7 @@ import NotFound2 from "./pages/NotFound2";
 import ForgotPassword from "./pages/admin/ForgotPassword.";
 import ResetPassword from "./pages/admin/ResetPassword";
 import UserProfilePage from "./pages/admin/Profile";
+import TermsAndServices from "./pages/TermsAndServices";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: '/about',
         element: <About />
+      },
+      {
+        path: '/terms-and-services',
+        element: <TermsAndServices />
       },
       {
         path: '/masjid/:masjidId',

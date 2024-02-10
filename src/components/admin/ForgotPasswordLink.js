@@ -13,12 +13,12 @@ const ForgotPasswordLink = () => {
       <p className="text-gray-600 mb-2">Forgot your password?</p>
       <p className="text-gray-600">
         No worries! You can reset it &nbsp;
-        <a
+        <button
           className="text-blue-500 hover:underline cursor-pointer"
           onClick={handleForgotPasswordClick}
         >
           here
-        </a>
+        </button>
         .
       </p>
     </div>

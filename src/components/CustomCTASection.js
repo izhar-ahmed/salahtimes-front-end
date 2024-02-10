@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 const CustomCTASection = ({ heading, subheading, exploreLabel, directionsLabel }) => {
   return (
-    <section className="relative my-5 bg-indigo-600">
-      <div>
-        <div className="container mx-auto grid lg:grid-cols-2 gap-8 lg:gap-16 items-center justify-center py-12 md:py-24 overflow-hidden relative">
+    <section className="bg-indigo-600">
+      <div className='container mx-auto'>
+        <div className="bg-indigo-600 mx-auto grid lg:grid-cols-2 gap-8 lg:gap-16 items-center justify-center max-w-[1070px] px-8 py-12 md:px-12 md:py-16 overflow-hidden relative">
           <div>
             {heading}
           </div>

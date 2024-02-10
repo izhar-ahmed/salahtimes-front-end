@@ -1,5 +1,4 @@
 import axios from "axios";
-import { async } from "q";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -54,6 +53,7 @@ const AddTimeTableForm = ({ masjidId }) => {
 			"endTime": ""
 		}
 	]);
+
 	const navigate = useNavigate();
 	const token = localStorage.getItem('token');
 

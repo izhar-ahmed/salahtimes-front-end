@@ -1,14 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useEditUserForm from '../../components/admin/useEditUserForm';
 import { useParams } from 'react-router';
 
 const EditUser = () => {
 	const {userId} = useParams()
   const { formik, loading, error, roles } = useEditUserForm(userId);
-
-
-	// console.log(user)
-	
 
   return (
     <div className="flex flex-col">

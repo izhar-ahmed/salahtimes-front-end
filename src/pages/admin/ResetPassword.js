@@ -5,10 +5,12 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const ResetPassword = () => {
-  const [isValidCode, _] = useState(true);
+  const [isValidCode, setIsValidCode] = useState(true);
   const { code } = useParams();
 
-  useEffect(() => {}, [code]);
+  useEffect(() => {
+    setIsValidCode(true)
+  }, [code]);
 
   const initialValues = {
     password: '',

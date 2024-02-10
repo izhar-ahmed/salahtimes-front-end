@@ -1,5 +1,5 @@
 // useEditUserForm.js
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -13,12 +13,12 @@ const useEditUserForm = (userId) => {
   const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
 	const navigate = useNavigate();
 
-	const initialValues = {
+	const initialValues = useMemo(() => ({
     name: user?.userName || '',
     email: user?.email || '',
     password: '',
     roleIds: user?.roles || [],
-  };
+  }), [user]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -54,7 +54,7 @@ const useEditUserForm = (userId) => {
 
     fetchUser();
     fetchRoles();
-  }, [userId, token]);
+  }, [userId, token, initialValues]);
 
   const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),

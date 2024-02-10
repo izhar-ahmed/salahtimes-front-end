@@ -22,6 +22,16 @@ const Logs = () => {
       sortable: true,
     },
     {
+      name: 'IP Address',
+      selector: (row) => row.ipAddress,
+      sortable: true,
+    },
+    {
+      name: 'User Agent',
+      selector: (row) => row.userAgent,
+      sortable: true,
+    },
+    {
       id: 'createdAt',
       name: 'Created At',
       selector: (row) => row.createdAt,
@@ -39,7 +49,6 @@ const Logs = () => {
 
   return (
     <div>
-      <h2>Logs</h2>
       <DataTable
         title="Logs"
         columns={columns}

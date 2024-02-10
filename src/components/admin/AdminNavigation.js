@@ -1,8 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
-
 const AdminNavigation = () => {
     const navigate = useNavigate();
     const handleLogout = async () => {
@@ -21,6 +19,7 @@ const AdminNavigation = () => {
         } catch (error) {
             console.error('Logout Error:', error);
             // Handle error, e.g., show a message to the user 
+            navigate('/m-admin/login');
         }
     }
 

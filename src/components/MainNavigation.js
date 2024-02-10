@@ -2,12 +2,11 @@ import { useState, useEffect } from "react";
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import logo from '../img/mark-logo.svg'
+import logo from '../img/mark-logo.png'
 const navigation = [
+    { name: 'Explore Mosques', href: '/' },
     { name: 'About', href: '/about' },
-    { name: 'Explore Mosques', href: '/explore' },
     { name: 'Contact', href: '/contact' },
-    { name: 'Marketplace', href: '/market' },
 ]
 
 const MainNavigation = () => {
@@ -21,14 +20,14 @@ const MainNavigation = () => {
     }, [location.pathname]);
 
     return (
-        <div className="bg-white mb-20">
-            <header className="absolute inset-x-0 top-0 z-50">
+        <div className="bg-white">
+            <header className="inset-x-0 top-0 z-50">
                 <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
                     <div className="flex lg:flex-1">
                         <Link to='/' className="-m-1.5 p-1.5">
                             <span className="sr-only">Your Company</span>
                             <img
-                                className="h-8 w-auto"
+                                className="h-12 w-auto"
                                 src={logo}
                                 alt=""
                             />
@@ -114,8 +113,8 @@ const MainNavigation = () => {
                         </div>
                         <div className="mx-auto max-w-2xl py-20 sm:py-32 lg:py-16">
                             <div className="text-center">
-                                <h1 class="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-grey mb-0">
-                                    Welcome To <span class="font-light">[Your App]</span>
+                                <h1 className="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-grey mb-0">
+                                    Welcome To <span className="font-light">[Your App]</span>
                                 </h1>
                                 <p className="mt-6 text-lg font-bold text-neutral-700">
                                     Discover the beauty of prayer and find the perfect time for Salah

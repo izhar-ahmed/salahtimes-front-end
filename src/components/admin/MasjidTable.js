@@ -104,7 +104,7 @@ const MasjidTable = () => {
 			const deleteApi = `http://localhost:8080/api/masjid/${deleteMasjidId}`;
 
 			// Make the DELETE request
-			const response = await axios.delete(deleteApi, {
+			await axios.delete(deleteApi, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 					'Content-Type': 'application/json',

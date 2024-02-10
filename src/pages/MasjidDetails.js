@@ -1,4 +1,3 @@
-// MasjidDetails.js
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -13,108 +12,95 @@ const MasjidDetails = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [cancelToken, setCancelToken] = useState(null);
-    // console.log("masjidId: "+ masjidId)
 
-    // Function to check if azaanTime is upcoming
     const isUpcomingAzaan = (azaanTime) => {
         const today = new Date();
-        const formattedDate = `${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getDate().toString().padStart(2, '0')}/${today.getFullYear()}`;
+        const formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
         const azaanDateTime = new Date(`${formattedDate} ${azaanTime}`);
         return azaanDateTime > new Date();
     };
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
+    const GetUpdatedNamazTime = (namazTimeData) => {
+        const updatedNamazTimes = [];
+        let stopChecking = false;
 
+        const today = new Date();
+        const dayOfWeek = today.getDay();
+
+        for (const namazTime of namazTimeData) {
+            if (!stopChecking) {
+                const isUpcoming = isUpcomingAzaan(namazTime.azaanTime);
+                updatedNamazTimes.push({
+                    ...namazTime,
+                    selected: isUpcoming,
+                });
+
+                if (isUpcoming) {
+                    stopChecking = true;
+                }
+            } else {
+                updatedNamazTimes.push({
+                    ...namazTime,
+                    selected: false
+                })
+            }
+        }
+
+        if (dayOfWeek === 5) {
+            const updatedNamazTimesWithSelection = updatedNamazTimes.map(namaz => {
+                if (namaz.namazName === 'JUMA') {
+                    return { ...namaz, selected: true };
+                } else if (namaz.namazName === 'ZOHAR') {
+                    return { ...namaz, selected: false };
+                } else {
+                    return namaz;
+                }
+            });
+            return updatedNamazTimesWithSelection
+        } else {
+            return updatedNamazTimes
+        }
+    }
+    
+    const fetchData = async (masjidId, token) => {
         const MASJID_API_URL = `http://localhost:8080/api/masjid/${masjidId}`;
+        try {
+            setLoading(true);
+            const response = await axios.get(MASJID_API_URL, {
+                cancelToken: token
+            });
+            const masjidData = response.data.masjid;
+            const updatedNamazTimes = GetUpdatedNamazTime(masjidData.NamazTimes);
+            setMasjid(response.data.masjid);
+            setNamazTime(updatedNamazTimes);
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
         if (cancelToken) {
             cancelToken.cancel('Operation canceled by the user.');
         }
         const newCancelToken = axios.CancelToken.source();
         setCancelToken(newCancelToken);
 
-        // Define an asynchronous function to fetch data
-        const fetchData = async () => {
-            try {
-                // Set loading to true while fetching
-                setLoading(true);
-
-                // Make an asynchronous request
-                const response = await axios.get(MASJID_API_URL, {
-                    cancelToken: newCancelToken.token
-                });
-
-                let masjidData = response.data.masjid
-                // Update NamazTimes with selected property using for loop
-                const updatedNamazTimes = [];
-                let stopChecking = false;
-                for (const namazTime of masjidData.NamazTimes) {
-                    if (!stopChecking) {
-                        // Select Friday JUMA namaz
-                        const today = new Date();
-                        const dayOfWeek = today.getDay();
-                        if (dayOfWeek === 5) {
-                            const isUpcoming = isUpcomingAzaan(namazTime.azaanTime);
-                            if (namazTime.namazName === 'ZOHAR' && isUpcoming) {
-                                const jumaNamazTime = masjidData.NamazTimes.find((namazTime) => namazTime.namazName === "JUMA");
-                                updatedNamazTimes.push({
-                                    ...jumaNamazTime,
-                                    selected: true,
-                                });
-                            }
-
-                            // Break the loop when isUpcoming is true
-                            if (isUpcoming) {
-                                stopChecking = true;
-                            }
-                        } else {
-                            // Select Other Namaz
-                            const isUpcoming = isUpcomingAzaan(namazTime.azaanTime);
-                            updatedNamazTimes.push({
-                                ...namazTime,
-                                selected: isUpcoming,
-                            });
-
-                            // Break the loop when isUpcoming is true
-                            if (isUpcoming) {
-                                stopChecking = true;
-                            }
-                        }
-
-                    } else {
-                        updatedNamazTimes.push({
-                            ...namazTime,
-                            selected: false
-                        })
-                    }
-                }
-
-                setMasjid(response.data.masjid);
-                setNamazTime(updatedNamazTimes);
-            } catch (error) {
-                // Handle errors
-                setError(error.message);
-            } finally {
-                // Set loading to false regardless of success or failure
-                setLoading(false);
-            }
-        };
-
-        // Call the async function
-        fetchData();
+        fetchData(masjidId, newCancelToken.token);
 
         return () => {
             if (newCancelToken) {
                 newCancelToken.cancel('Component unmounted.');
             }
         };
-    }, [cancelToken, masjidId]);
+    }, [masjidId]);
 
     return (
         <>
             <Header
-                heading={<h1 className="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-grey mb-0">Explore {masjid.masjidName} <span className="font-light">Details</span></h1>} 
+                heading={<h1 className="text-4xl leading-tight md:text-4xl lg:text-5xl font-bold text-grey mb-0"><span className="font-light">Explore</span> <span className='uppercase'>{masjid.masjidName}</span> <span className="font-light">Details</span></h1>}
                 subHeading={`ADDRESS: ${masjid.masjidAddress}`}
             />
 
@@ -126,21 +112,23 @@ const MasjidDetails = () => {
             />
 
             <CustomCTASection
-                heading= {<h2 className="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-white mb-0"><span className="font-light">Let's</span> Explore The Mosque Locations <span class="font-light">together!</span></h2>}
+                heading={<h2 className="text-4xl leading-tight md:text-4xl lg:text-4xl font-bold text-white mb-0"><span className="font-light">Let's Explore</span> The Mosque Locations <span className="font-light">together!</span></h2>}
                 subheading={<p className="text-lg font-medium text-white">Find the Right Direction for Prayer.</p>}
                 exploreLabel="Explore Mosques"
                 directionsLabel="Get Directions"
             />
-            <iframe
-                src={masjid.masjidGoogleMapLink}
-                width="600"
-                height="450"
-                title={`${masjid.masjidName} Map`}
-                style={{ border: 0, width: "100%", height: "600px", marginBottom: '30px' }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-            />
+            {masjid.masjidGoogleMapLink && (
+                <iframe
+                    src={masjid.masjidGoogleMapLink}
+                    width="600"
+                    height="450"
+                    title={`${masjid.masjidName} Map`}
+                    style={{ border: 0, width: "100%", height: "450px" }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                />
+            )}
         </>
     );
 }

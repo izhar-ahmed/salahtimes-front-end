@@ -10,12 +10,12 @@ const Contact = () => {
 		<> 
 			<div className="header-bg absolute top-0 left-0 right-0 -z-50 w-full h-[1100px] bg-gradient-to-b from-primary-light-950/15 to-transparent max-h-[1100px] overflow-hidden"></div>
 			<Header2
-					heading={<h1 class="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-grey mb-0">
-          Let’s Stay <span class="font-light">Connected</span>
+					heading={<h1 className="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-grey mb-0">
+          Let’s Stay <span className="font-light">Connected</span>
         </h1>}
 					subHeading={`Call us, use our live chat widget or send us an email and we will get back to you as soon as possible.`}
 			/>
-			<section className="py-12">
+			<section className="pb-20">
 				<div className="container w-[80%] mx-auto">
 					<div className="max-w-[850px] mx-auto bg-neutral-0 dark:bg-neutral-dark-0 rounded-3xl p-8 md:p-12 lg:p-20 border border-neutral-200 dark:border-neutral-dark-200">
 						<h4 className="text-neutral-950 dark:text-neutral-dark-950 text-3xl font-bold mb-8"><span className="font-light">Get In</span> Touch</h4>
@@ -92,7 +92,7 @@ const Contact = () => {
 				</div>
 			</section>
 			<CustomCTASection
-				heading={<h2 className="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-white mb-0"><span className="font-light">Let's</span> Explore The Mosque Locations <span class="font-light">together!</span></h2>}
+				heading={<h2 className="text-3xl leading-tight md:text-4xl lg:text-4xl font-bold text-white mb-0"><span className="font-light">Let's</span> Explore The Mosque Locations <span className="font-light">together!</span></h2>}
 				subheading={<p className="text-lg font-medium text-white">Find the Right Direction for Prayer.</p>}
 				exploreLabel="Explore Mosques"
 				directionsLabel="Get Directions"

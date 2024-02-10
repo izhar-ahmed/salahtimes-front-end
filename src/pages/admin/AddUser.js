@@ -10,6 +10,8 @@ const AddUser = () => {
       <div style={{ fontWeight: "400" }} className='evaFvq'>Add User</div>
       <div className="bg-white p-8 rounded shadow-md w-1/3">
         <form onSubmit={formik.handleSubmit}>
+          <div className="mb-4">{error}</div>
+          
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-600">Name:</label>
             <input

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 
@@ -18,25 +18,24 @@ const EditMasjidForm = ({masjidId}) => {
     setMasjidImage(file);
   };
 
-	const GetMasjidDetails = () => {
-		const getMasjidApi = `http://localhost:8080/api/masjid/${masjidId}`;
-		axios.get(getMasjidApi).then((response) => {
-			console.log(response.data.masjid)
-			setMasjidName(response.data.masjid.masjidName);
-			setMasjidArea(response.data.masjid.masjidArea);
-			setMasjidAddress(response.data.masjid.masjidAddress);
-			setMasjidGoogleMapLink(response.data.masjid.masjidGoogleMapLink);
-		})
-		.catch((err) => {
-			console.error("error while getting");
-		})
-	}
-
+	const GetMasjidDetails = useCallback(async () => {
+    try {
+      const getMasjidApi = `http://localhost:8080/api/masjid/${masjidId}`;
+      const response = await axios.get(getMasjidApi);
+      console.log(response.data.masjid);
+      setMasjidName(response.data.masjid.masjidName);
+      setMasjidArea(response.data.masjid.masjidArea);
+      setMasjidAddress(response.data.masjid.masjidAddress);
+      setMasjidGoogleMapLink(response.data.masjid.masjidGoogleMapLink);
+    } catch (error) {
+      console.error("Error while getting:", error);
+    }
+  }, [masjidId, setMasjidName, setMasjidArea, setMasjidAddress, setMasjidGoogleMapLink]);
 
 	useEffect(() => {
 		console.log("use effect called..")
 		GetMasjidDetails()
-	}, []);
+	}, [GetMasjidDetails]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();

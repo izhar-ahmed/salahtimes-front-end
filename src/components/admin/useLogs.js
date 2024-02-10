@@ -29,7 +29,7 @@ const useLogs = () => {
     };
 
     fetchLogs();
-  }, []);
+  }, [token]);
 
   return { logs, loading, error };
 };

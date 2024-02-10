@@ -1,5 +1,5 @@
 // UsersTable.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router';
 import DeleteConfirmation from '../../components/admin/DeleteConfirmation';
@@ -65,7 +65,7 @@ const Users = () => {
       const deleteApi = `http://localhost:8080/api/users/delete-user/${selectedUser.id}`;
 
       // Make the DELETE request
-      const response = await axios.delete(deleteApi, {
+      await axios.delete(deleteApi, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -86,21 +86,12 @@ const Users = () => {
   }
 
 
-
+  
   const handleCancelDelete = () => {
     setDeleteConfirmationVisible(false);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-
-      await fetchUserData();
-
-    }
-    fetchData();
-  }, []);
-
-  const fetchUserData = async () => {
+  
+  const fetchUserData = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:8080/api/users', {
         headers: {
@@ -108,12 +99,19 @@ const Users = () => {
         },
       });
       setUsers(response.data);
-      console.log(response.data)
     } catch (error) {
       console.error('Failed to fetch users:', error);
       setError('Failed to fetch roles');
     }
-  }
+  }, [token]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchUserData();
+    }
+    fetchData();
+  }, [fetchUserData]);
+
 
   // For now, let's use sample data
   return (
@@ -121,6 +119,7 @@ const Users = () => {
       <Link type='button' to='/m-admin/users/add-user' className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
         <PlusIcon className='h-5 w-5 text-white-500 inline pb-1' />
         Add User</Link>
+      {error && <div className=''>${error}</div> }
       <DataTable
         title="Users"
         columns={columns}
