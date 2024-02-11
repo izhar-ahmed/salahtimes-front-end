@@ -20,11 +20,16 @@ const MasjidInfo = ({ masjidId }) => {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
     const masjidApi = `http://localhost:8080/api/masjid/${masjidId}`;
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(masjidApi);
+        const response = await axios.get(masjidApi, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         let masjidData = response.data.masjid;
 
         // Update NamazTimes with selected property using for loop

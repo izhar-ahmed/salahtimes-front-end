@@ -63,7 +63,7 @@ const MasjidDetails = () => {
     }
     
     const fetchData = async (masjidId, token) => {
-        const MASJID_API_URL = `http://localhost:8080/api/masjid/${masjidId}`;
+        const MASJID_API_URL = `http://localhost:8080/api/public/masjid/${masjidId}`;
         try {
             setLoading(true);
             const response = await axios.get(MASJID_API_URL, {

@@ -26,10 +26,15 @@ const MasjidTable = () => {
 
 	// fetch all masjid data and set state
 	const fetchMasjidData = async () => {
+		const token = localStorage.getItem("token");
 		const getAllMasjid = "http://localhost:8080/api/masjid";
 
 		try {
-			const response = await axios.get(getAllMasjid);
+			const response = await axios.get(getAllMasjid, {
+				headers: {
+					Authorization: `Bearer ${token}`
+				}
+			});
 			setMasjidData(response.data.masjidWithNamazIds);
 		} catch (error) {
 			console.error("Error fetching masjids:", error);
