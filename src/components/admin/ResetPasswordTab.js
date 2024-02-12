@@ -14,7 +14,7 @@ const ResetPasswordTab = ({ token }) => {
 
   const onSubmit = async (values, { setSubmitting }) => {
     try {
-      await axios.post('API_ENDPOINT/reset-password', values, {
+      await axios.put('http://localhost:8080/api/users/profile/reset-password', values, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -48,6 +48,7 @@ const ResetPasswordTab = ({ token }) => {
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-600">New Password:</label>
               <input
+                name='password'
                 id="password"
                 type="password"
                 {...formik.getFieldProps('password')}
@@ -60,6 +61,7 @@ const ResetPasswordTab = ({ token }) => {
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-600">Confirm New Password:</label>
               <input
+                name='confirmPassword'
                 id="confirmPassword"
                 type="password"
                 {...formik.getFieldProps('confirmPassword')}

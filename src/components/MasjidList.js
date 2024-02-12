@@ -36,16 +36,6 @@ const MasjidList = () => {
 
       {/* Search Bar */}
       <div className="mb-4 w-[30%]">
-        {/* <label className="block text-lg mb-1" htmlFor="search">Search By Area</label>
-        <input
-          type="text"
-          placeholder="Search By Area"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="p-2 w-[30%] border rounded"
-          id="search"
-        /> */}
-
         <form>
           <label
             htmlFor="search"
@@ -88,14 +78,14 @@ const MasjidList = () => {
         {paginatedMosques.map((mosque) => (
           <div
             key={mosque.masjidId}
-            className="card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition duration-300"
+            className="card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition duration-300 relative"
           >
             <img
               src={imgUrl + mosque.masjidPhoto}
               alt={mosque.masjidName}
               className="w-full h-48 object-cover"
             />
-            <div className="px-4 pt-4 relative h-[160px]">
+            <div className="px-4 pt-4 h-[160px]">
               <Link
                 to={`masjid/${mosque.masjidId}`}
                 className="text-xl font-semibold text-gray-800 item-link inline-block mb-2"
@@ -109,11 +99,11 @@ const MasjidList = () => {
               <div className="card-footer w-full">
                 <Link
                   to={`masjid/${mosque.masjidId}`}
-                  className="group btn bg-primary-light-950 rounded-full px-4 py-1.5 text-sm text-white block w-[120px] text-center absolute bottom-4 left-4"
+                  className="group btn bg-primary-light-950 rounded-md px-4 py-1.5 text-sm text-white block w-[120px] text-center absolute bottom-4 left-4"
                 >
                   View Details
                 </Link>
-                <span className="px-3 py-1 bg-neutral-200 text-xs rounded-3xl ml-2 inline-block text-center absolute bottom-4 right-4">
+                <span className="px-3 py-1 bg-neutral-600 text-white text-xs rounded-3xl inline-block text-center absolute top-4 right-4">
                   {mosque.masjidArea}
                 </span>
               </div>

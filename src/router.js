@@ -24,6 +24,7 @@ import ForgotPassword from "./pages/admin/ForgotPassword.";
 import ResetPassword from "./pages/admin/ResetPassword";
 import UserProfilePage from "./pages/admin/Profile";
 import TermsAndServices from "./pages/TermsAndServices";
+import Contacts from "./pages/admin/Contacts";
 
 const router = createBrowserRouter([
   {
@@ -96,6 +97,10 @@ const router = createBrowserRouter([
       {
         path: 'masjid/edit-timetable/:masjidId',
         element: <EditNamazTime />
+      },
+      {
+        path: 'contacts',
+        element: <Contacts />
       },
       {
         path: 'users',
