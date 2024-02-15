@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { Link, useNavigate } from 'react-router-dom';
 import useContacts from './../../components/admin/useContacts';
+import DeleteConfirmation from '../../components/admin/DeleteConfirmation';
+import axios from 'axios';
 
 const Contacts = () => {
+  const [isPopupVisible, setPopupVisible] = useState(false);
+	const [deleteContactId, setDeleteContactId] = useState(null);
   const { contacts, loading, error } = useContacts();
   const navigate = useNavigate();
 
@@ -38,10 +42,10 @@ const Contacts = () => {
       name: 'Actions',
       cell: (row) => (
         <div>
-          <Link to={`/m-admin/contact/${row.id}`} className="btn btn-primary mr-2">
+          <Link to={`/m-admin/contacts/view-contact/${row.id}`} className="px-5 py-2 rounded-md bg-indigo-600 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mr-1">
             View
           </Link>
-          <button className="btn btn-danger" onClick={() => handleDelete(row.id)}>
+          <button className="px-5 py-2 rounded-md bg-indigo-600 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mr-1" onClick={() => handleDeleteClick(row.id)}>
             Delete
           </button>
         </div>
@@ -49,11 +53,45 @@ const Contacts = () => {
     },
   ];
 
-  const handleDelete = (id) => {
+  // Handle delete click
+  const handleDeleteClick = (id) => {
     // Implement delete functionality
+    setDeleteContactId(id);
+    setPopupVisible(true);
     // Redirect to contacts page after deletion
-    navigate('/contacts');
+    // navigate('/contacts');
   };
+
+  // Handle cancel delete
+	const handleCancelDelete = () => {
+		// Close the popup and reset deleteItemId
+		setPopupVisible(false);
+		setDeleteContactId(null);
+	};
+
+  // Handle confirm delete
+  const handleConfirmDelete = async () => {
+		try {
+			const token = localStorage.getItem('token');
+			const deleteApi = `http://localhost:8080/api/contact/delete-contact/${deleteContactId}`;
+
+			// Make the DELETE request
+			await axios.delete(deleteApi, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				},
+			});
+
+			// Handle the response as needed
+			setPopupVisible(false);
+			setDeleteContactId(null);
+			navigate('/m-admin/contacts');
+		} catch (error) {
+			// Handle errors
+			console.error('Error deleting data:', error);
+		}
+	}
 
   if (loading) {
     return <p>Loading...</p>;
@@ -75,6 +113,10 @@ const Contacts = () => {
         defaultSortAsc={false}
         responsive
       />
+      {/* Popup */}
+			{isPopupVisible && (
+				<DeleteConfirmation onConfirm={handleConfirmDelete} onCancel={handleCancelDelete} />
+			)}
     </div>
   );
 };

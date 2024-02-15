@@ -1,9 +1,11 @@
 import CustomCTASection from "../components/CustomCTASection";
 import MasjidList from "../components/MasjidList";
+import MasjidBanner from "../components/admin/MasjidBanner";
 
 const Home = () => {
     return (
         <>
+            <MasjidBanner />
             <MasjidList />
             <CustomCTASection
                 heading={

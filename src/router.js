@@ -25,6 +25,8 @@ import ResetPassword from "./pages/admin/ResetPassword";
 import UserProfilePage from "./pages/admin/Profile";
 import TermsAndServices from "./pages/TermsAndServices";
 import Contacts from "./pages/admin/Contacts";
+import Banner from "./pages/admin/Banner";
+import ContactDetails from "./pages/admin/ContactDetails";
 
 const router = createBrowserRouter([
   {
@@ -101,6 +103,14 @@ const router = createBrowserRouter([
       {
         path: 'contacts',
         element: <Contacts />
+      },
+      {
+        path: 'contacts/view-contact/:contactId',
+        element: <ContactDetails />
+      },
+      {
+        path: 'banner',
+        element: <Banner />
       },
       {
         path: 'users',

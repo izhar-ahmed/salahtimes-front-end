@@ -11,9 +11,9 @@ const useEditUserForm = (userId) => {
   const [user, setUser] = useState(null);
   const [roles, setRoles] = useState([]);
   const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	const initialValues = useMemo(() => ({
+  const initialValues = useMemo(() => ({
     name: user?.userName || '',
     email: user?.email || '',
     password: '',
@@ -28,10 +28,11 @@ const useEditUserForm = (userId) => {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log(response.data)
         setUser(response.data);
-				initialValues.name = response.data.userName
-				initialValues.email = response.data.email
-				initialValues.roleIds = response.data.roles
+        initialValues.name = response.data.userName
+        initialValues.email = response.data.email
+        initialValues.roleIds = response.data.roles
       } catch (error) {
         console.error('Failed to fetch user:', error);
         setError('Failed to fetch user');
@@ -54,7 +55,7 @@ const useEditUserForm = (userId) => {
 
     fetchUser();
     fetchRoles();
-  }, [userId, token, initialValues]);
+  }, []);
 
   const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
@@ -72,13 +73,13 @@ const useEditUserForm = (userId) => {
           'Content-Type': 'application/json',
         },
       });
-			
+
       if (response.status !== 201) {
-				throw new Error(response.data.message || 'Failed to edit user');
+        throw new Error(response.data.message || 'Failed to edit user');
       }
-			
-			// Navigate to the list page after successful edit
-			navigate('/m-admin/users');
+
+      // Navigate to the list page after successful edit
+      navigate('/m-admin/users');
     } catch (error) {
       setError(error.message);
     } finally {

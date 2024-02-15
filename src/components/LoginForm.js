@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ForgotPasswordLink from './admin/ForgotPasswordLink';
+import ReCAPTCHA from 'react-google-recaptcha-v2';
+import * as DOMPurify from 'dompurify';
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const [recaptchaToken, setRecaptchaToken] = useState('');
+
+  const onRecaptchaChange = (token) => {
+    console.log(token)
+    setRecaptchaToken(token);
+  };
 
   const signIn = async (credential) => {
     try {
       let headers = { headers: { 'Content-Type': 'application/json' } };
-      let response = await axios.post('http://localhost:8080/api/login', credential, headers);
+      let response = await axios.post('http://localhost:8080/api/login', { ...credential, recaptchaToken }, headers);
       return response.data.token;
     } catch (error) {
       console.error("error while login", error);
@@ -31,17 +39,14 @@ const LoginForm = () => {
     onSubmit: async (values) => {
       try {
         const authToken = await signIn(values);
-        // console.log(`authToken: `, authToken);
         if (!authToken) {
-          // console.log('token is invalid');
           navigate('/m-admin/login');
         } else {
-        localStorage.setItem('token', authToken);
-        navigate('/m-admin');
+          localStorage.setItem('token', authToken);
+          navigate('/m-admin');
         }
       } catch (error) {
         console.error('Login failed:', error.message);
-        // Handle login failure (show an error message, etc.)
       }
     },
   });
@@ -66,7 +71,14 @@ const LoginForm = () => {
                   className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-blue-500 light:focus:border-blue-500 ${formik.touched.email && formik.errors.email ? 'border-red-500' : ''
                     }`}
                   placeholder="name@company.com"
-                  onChange={formik.handleChange}
+                  onChange={(event) =>
+                    formik.handleChange({
+                      target: {
+                        ...event.target,
+                        value: DOMPurify.sanitize(event.target.value),
+                      },
+                    })
+                  }
                   onBlur={formik.handleBlur}
                   value={formik.values.email}
                   required
@@ -86,7 +98,14 @@ const LoginForm = () => {
                   placeholder="••••••••"
                   className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-blue-500 light:focus:border-blue-500 ${formik.touched.password && formik.errors.password ? 'border-red-500' : ''
                     }`}
-                  onChange={formik.handleChange}
+                  onChange={(event) =>
+                    formik.handleChange({
+                      target: {
+                        ...event.target,
+                        value: DOMPurify.sanitize(event.target.value),
+                      },
+                    })
+                  }
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
                   required
@@ -96,6 +115,10 @@ const LoginForm = () => {
                 ) : null}
               </div>
               <ForgotPasswordLink />
+              <ReCAPTCHA
+                sitekey="6Le8g3IpAAAAAFixDZCvnUbZRWFS07FWlOVEIWI5"
+                onChange={onRecaptchaChange}
+              />
               <button
                 type="submit"
                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600

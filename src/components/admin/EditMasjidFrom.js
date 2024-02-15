@@ -19,9 +19,14 @@ const EditMasjidForm = ({masjidId}) => {
   };
 
 	const GetMasjidDetails = useCallback(async () => {
+    const token = localStorage.getItem('token');
     try {
       const getMasjidApi = `http://localhost:8080/api/masjid/${masjidId}`;
-      const response = await axios.get(getMasjidApi);
+      const response = await axios.get(getMasjidApi, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
       console.log(response.data.masjid);
       setMasjidName(response.data.masjid.masjidName);
       setMasjidArea(response.data.masjid.masjidArea);
