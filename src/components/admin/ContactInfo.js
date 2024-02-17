@@ -30,10 +30,10 @@ const ContactInfo = ({ contactId }) => {
 
     return (
         <div className="container mx-auto">
-            <div className="max-w-md mt-10 p-6 bg-gray-100 rounded-lg shadow-xl">
+            <div style={{ fontWeight: "400" }} className='evaFvq'>Contact Details</div>
+            <div className="max-w-md p-6 rounded-lg shadow-xl">
                 {contact ? (
                     <div>
-                        <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
                         <div className="mb-2"><strong>Name:</strong> {contact.name}</div>
                         <div className="mb-2"><strong>Email:</strong> {contact.email}</div>
                         <div className="mb-2"><strong>Subject:</strong> {contact.subject}</div>

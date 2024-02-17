@@ -12,14 +12,12 @@
 	padding-bottom: 0.75rem;
 }
 
-@media (min-width: 768px) {
-	.input-default {
-		margin-bottom: 1rem;
-	}
+.input-default.error-input {
+	border-color: red;
+	border-width: 2px;
 }
 
 .textarea-default {
-	margin-bottom: 1rem;
 	min-height: 12rem;
 	width: 100%;
 	border-radius: 0.5rem;
@@ -32,6 +30,11 @@
 	padding-right: 1rem;
 	padding-top: 0.75rem;
 	padding-bottom: 0.75rem;
+}
+
+.textarea-default.error-input {
+	border-color: red;
+	border-width: 2px;
 }
 
 .bg-primary-light-950 {

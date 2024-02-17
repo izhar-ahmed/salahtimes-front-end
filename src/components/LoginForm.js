@@ -1,20 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ForgotPasswordLink from './admin/ForgotPasswordLink';
-import ReCAPTCHA from 'react-google-recaptcha-v2';
+import ReCAPTCHA from 'react-google-recaptcha';
 import * as DOMPurify from 'dompurify';
+import { useLocation } from 'react-router-dom';
+
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
+  const [successMessage, setSuccessMessage] = useState('');
   const [recaptchaToken, setRecaptchaToken] = useState('');
+  const [isVisible, setIsVisible] = useState(true);
+  const recaptchaRef = useRef(null);
+
+  const handleClose = () => {
+    setIsVisible(false);
+    window.history.replaceState({}, '', window.location.pathname);
+  };
 
   const onRecaptchaChange = (token) => {
     console.log(token)
     setRecaptchaToken(token);
   };
+
+  const setCaptchaRef = (ref) => {
+    if (ref) {
+      return recaptchaRef.current = ref;
+    }
+  };
+
+  const resetCaptcha = () => {
+    // maybe set it till after is submitted
+    if (recaptchaRef.current && typeof recaptchaRef.current.reset !== 'undefined') {
+      recaptchaRef.current.reset();
+    }
+  }
 
   const signIn = async (credential) => {
     try {
@@ -51,6 +76,14 @@ const LoginForm = () => {
     },
   });
 
+
+
+  useEffect(() => {
+    if (state && state.successMessage) {
+      setSuccessMessage(state.successMessage);
+    }
+  }, [state]);
+
   return (
     <section className="bg-gray-50 light:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -59,6 +92,20 @@ const LoginForm = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl light:text-white">
               Log in to your account
             </h1>
+            <div>
+              {successMessage && isVisible && (
+                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                  <strong className="font-bold">Success!</strong>
+                  <span className="block sm:inline"> {successMessage}</span>
+                  <span className="absolute top-0 bottom-0 right-0 px-4 py-3" onClick={handleClose}>
+                    <svg className="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <title>Close</title>
+                      <path d="M14.348 5.652a.5.5 0 0 0-.707 0L10 9.293 6.359 5.652a.5.5 0 0 0-.707.708L9.293 10l-3.64 3.641a.5.5 0 0 0 .707.707L10 10.707l3.641 3.64a.5.5 0 0 0 .707-.707L10.707 10l3.641-3.648a.5.5 0 0 0 0-.707z" />
+                    </svg>
+                  </span>
+                </div>
+              )}
+            </div>
             <form className="space-y-4 md:space-y-6" onSubmit={formik.handleSubmit}>
               <div>
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 light:text-white">
@@ -72,7 +119,7 @@ const LoginForm = () => {
                     }`}
                   placeholder="name@company.com"
                   onChange={(event) =>
-                    formik.handleChange({
+                    formik.handleChange(event, {
                       target: {
                         ...event.target,
                         value: DOMPurify.sanitize(event.target.value),
@@ -81,7 +128,6 @@ const LoginForm = () => {
                   }
                   onBlur={formik.handleBlur}
                   value={formik.values.email}
-                  required
                 />
                 {formik.touched.email && formik.errors.email ? (
                   <div className="text-red-500 text-sm">{formik.errors.email}</div>
@@ -99,7 +145,7 @@ const LoginForm = () => {
                   className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-blue-500 light:focus:border-blue-500 ${formik.touched.password && formik.errors.password ? 'border-red-500' : ''
                     }`}
                   onChange={(event) =>
-                    formik.handleChange({
+                    formik.handleChange(event, {
                       target: {
                         ...event.target,
                         value: DOMPurify.sanitize(event.target.value),
@@ -108,7 +154,6 @@ const LoginForm = () => {
                   }
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
-                  required
                 />
                 {formik.touched.password && formik.errors.password ? (
                   <div className="text-red-500 text-sm">{formik.errors.password}</div>
@@ -118,6 +163,7 @@ const LoginForm = () => {
               <ReCAPTCHA
                 sitekey="6Le8g3IpAAAAAFixDZCvnUbZRWFS07FWlOVEIWI5"
                 onChange={onRecaptchaChange}
+                ref={setCaptchaRef}
               />
               <button
                 type="submit"

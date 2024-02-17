@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
   const [isValidCode, setIsValidCode] = useState(true);
+  const navigate = useNavigate();
   const { code } = useParams();
 
   useEffect(() => {
@@ -25,15 +26,16 @@ const ResetPassword = () => {
 
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/reset-password', { code, ...values });
+      const response = await axios.post('http://localhost:8080/api/reset-password', { ...values, code });
       console.log(response.data.message); // Log success message or handle as needed
-      setSubmitting(false);
+      navigate('/m-admin/login', { state: { successMessage: 'Password reset successful. Please login with your new password.' } });
     } catch (error) {
       if (error.response) {
         setErrors({ password: error.response.data.message });
       } else {
         setErrors({ password: 'Something went wrong. Please try again later.' });
       }
+    } finally {
       setSubmitting(false);
     }
   };

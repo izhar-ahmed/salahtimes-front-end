@@ -30,28 +30,30 @@ const UploadBannerForm = () => {
 	};
 
 	return (
-		<div className="max-w-md p-6 bg-gray-100 rounded-lg shadow-lg">
-			<h2 className="text-xl font-bold mb-4">Upload Banner</h2>
-			{message && <p className="mb-4 text-green-600">{message}</p>}
-			<form onSubmit={handleSubmit} encType='multipart/form-data'>
-				<div className="mb-4">
-					<label htmlFor="banner" className="block text-gray-700">Choose Banner Image:</label>
-					<input
-						type="file"
-						name='banerImage'
-						id="banner"
-						className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-						accept="image/*"
-						onChange={handleImageChange}
-					/>
-				</div>
-				<button
-					type="submit"
-					className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-				>
-					Upload
-				</button>
-			</form>
+		<div className='container'>
+			<div style={{ fontWeight: "400" }} className='evaFvq'>Upload Banner</div>
+			<div className="max-w-md p-8 rounded-lg shadow-lg">
+				{message && <p className="mb-4 text-green-600">{message}</p>}
+				<form onSubmit={handleSubmit} encType='multipart/form-data'>
+					<div className="mb-4">
+						<label htmlFor="banner" className="block text-gray-700">Choose Banner Image:</label>
+						<input
+							type="file"
+							name='banerImage'
+							id="banner"
+							className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+							accept="image/*"
+							onChange={handleImageChange}
+						/>
+					</div>
+					<button
+						type="submit"
+						className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+					>
+						Upload
+					</button>
+				</form>
+			</div>
 		</div>
 	);
 };

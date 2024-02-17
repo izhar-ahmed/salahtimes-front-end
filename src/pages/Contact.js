@@ -1,12 +1,11 @@
-// Contact.js
-
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import './Common.css';
 import Header2 from '../components/Header2';
 import CustomCTASection from '../components/CustomCTASection';
+import ReCAPTCHA from 'react-google-recaptcha';
+import * as DOMPurify from 'dompurify';
 
 const validationSchema = Yup.object().shape({
 	name: Yup.string().required('Name is required'),
@@ -17,87 +16,119 @@ const validationSchema = Yup.object().shape({
 
 const Contact = () => {
 	const [successMessage, setSuccessMessage] = useState('');
+	const [recaptchaToken, setRecaptchaToken] = useState('');
+	const recaptchaRef = useRef(null);
+
+	const onRecaptchaChange = (token) => {
+		console.log(token);
+		setRecaptchaToken(token);
+	};
+
+	const setCaptchaRef = (ref) => {
+		if (ref) {
+			return recaptchaRef.current = ref;
+		}
+	};
+
+	const resetCaptcha = () => {
+		// maybe set it till after is submitted
+		if (recaptchaRef.current && typeof recaptchaRef.current.reset !== 'undefined') {
+			recaptchaRef.current.reset();
+		}
+	}
+
+	const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+		try {
+			const sanitizedValues = Object.keys(values).reduce((acc, key) => {
+				acc[key] = DOMPurify.sanitize(values[key]);
+				return acc;
+			}, {});
+			const response = await axios.post('http://localhost:8080/api/contact', {
+				...sanitizedValues,
+				recaptchaToken,
+			});
+			setSuccessMessage('Message sent successfully');
+			setTimeout(() => {
+				setSuccessMessage('');
+			}, 3000);
+			resetForm();
+			setRecaptchaToken('');
+			// Reset reCAPTCHA component
+			resetCaptcha()
+		} catch (error) {
+			console.error('Error:', error);
+		} finally {
+			setSubmitting(false);
+		}
+	};
+
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	return (
 		<>
-			<div className="header-bg absolute top-0 left-0 right-0 -z-50 w-full h-[1100px] bg-gradient-to-b from-primary-light-950/15 to-transparent max-h-[1100px] overflow-hidden"></div>
-			<Header2
-				heading={<h1 className="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-grey mb-0">
-					Let’s Stay <span className="font-light">Connected</span>
-				</h1>}
-				subHeading={`Call us, use our live chat widget or send us an email and we will get back to you as soon as possible.`}
-			/>
+			{/* Header Section */}
+			<Header2 heading={<h1 className="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-grey mb-0">Let’s Stay <span className="font-light">Connected</span></h1>} subHeading={`Call us, use our live chat widget or send us an email and we will get back to you as soon as possible.`} />
+
+			{/* Contact Form Section */}
 			<section className="pb-20">
-				<div className="container w-[80%] mx-auto">
-					<div className="max-w-[850px] mx-auto bg-neutral-0 dark:bg-neutral-dark-0 rounded-3xl p-8 md:p-12 lg:p-20 border border-neutral-200 dark:border-neutral-dark-200">
-						<h4 className="text-neutral-950 dark:text-neutral-dark-950 text-3xl font-bold mb-8"><span className="font-light">Get In</span> Touch</h4>
-						{successMessage && <div className="text-green-500">{successMessage}</div>}
-						<Formik
-							initialValues={{
-								name: '',
-								email: '',
-								subject: '',
-								message: '',
-							}}
-							validationSchema={validationSchema}
-							onSubmit={(values, { setSubmitting, resetForm }) => {
-								axios.post('http://localhost:8080/api/contact', values)
-									.then(response => {
-										console.log(response.data.message);
-										// Handle success message display
-										// Inside the onSubmit function, set the success message state and reset after 3 seconds
-										setSuccessMessage('Message sent successfully');
-										setTimeout(() => {
-											setSuccessMessage('');
-										}, 3000);
-										// Reset form and setSubmitting to false
-										resetForm();
-										setSubmitting(false);
-									})
-									.catch(error => {
-										console.error('Error:', error);
-										// Handle error
-										setSubmitting(false);
-									});
-							}}
-						>
-							{({ isSubmitting }) => (
-								<Form>
-									<div className="grid md:grid-cols-3 gap-4 mb-4 md:mb-0">
+				{/* Formik Wrapper */}
+				<Formik
+					initialValues={{ name: '', email: '', subject: '', message: '' }}
+					validationSchema={validationSchema}
+					onSubmit={handleSubmit}
+				>
+					{({ isSubmitting }) => (
+						<Form className="container w-[80%] mx-auto">
+							{/* Form Inputs */}
+							<div className="max-w-[850px] mx-auto bg-neutral-0 dark:bg-neutral-dark-0 rounded-3xl p-8 md:p-12 lg:p-20 border border-neutral-200 dark:border-neutral-dark-200">
+								<h4 className="text-neutral-950 dark:text-neutral-dark-950 text-3xl font-bold mb-8"><span className="font-light">Get In</span> Touch</h4>
+								{successMessage && <div className="text-green-500">{successMessage}</div>}
+								<div className="grid md:grid-cols-3 gap-4 mb-4 md:mb-0">
+									<div className='mb-4'>
 										<Field type="text" name="name" placeholder="Name" className="input-default" />
-										<ErrorMessage name="name" component="div" className="text-red-500" />
+										<ErrorMessage name="name" component="div" className="text-red-500 mb-4" />
+									</div>
+									<div className='mb-4'>
 										<Field type="email" name="email" placeholder="Email" className="input-default" />
-										<ErrorMessage name="email" component="div" className="text-red-500" />
+										<ErrorMessage name="email" component="div" className="text-red-500 mb-4" />
+									</div>
+									<div className='mb-4'>
 										<Field type="text" name="subject" placeholder="Subject" className="input-default" />
 										<ErrorMessage name="subject" component="div" className="text-red-500" />
 									</div>
+								</div>
+								<div className='mb-4'>
 									<Field as="textarea" name="message" placeholder="Message" className="textarea-default" />
-									<ErrorMessage name="message" component="div" className="text-red-500" />
-									<div className="flex items-center mb-8">
-										<input type="checkbox" id="save-info" className="w-4 h-4 accent-primary-light-950  bg-primary-light-950 text-neutral-0  rounded cursor-pointer mr-2" />
-										<label htmlFor="save-info" className="text-sm text-neutral-950 dark:text-neutral-dark-950">Save my name, email, and website in this browser for the next time</label>
-									</div>
-									<button type="submit" className="group btn bg-primary-light-950 dark:bg-primary-dark-950 rounded-full px-8 py-4 text-xl text-white dark:text-white flex gap-2 items-center" disabled={isSubmitting}>
-										{isSubmitting ? 'Sending...' : 'Send Message'}
-										<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" className="fill-neutral-950 dark:fill-white group-hover:translate-x-1 transition-all duration-300">
-											<g clipPath="url(#clip0_253_4238)">
-												<path d="M23.6164 11.0663L14.9491 2.39884C14.7017 2.15143 14.372 2.01562 14.0204 2.01562C13.6684 2.01562 13.3388 2.15162 13.0914 2.39884L12.3045 3.18596C12.0573 3.43298 11.9211 3.76293 11.9211 4.11473C11.9211 4.46634 12.0573 4.80741 12.3045 5.05443L17.3608 10.1219H1.29657C0.572288 10.1219 0 10.6889 0 11.4134V12.5262C0 13.2507 0.572288 13.8748 1.29657 13.8748H17.4182L12.3047 18.9706C12.0575 19.218 11.9213 19.539 11.9213 19.8908C11.9213 20.2422 12.0575 20.5679 12.3047 20.8151L13.0916 21.5997C13.339 21.8471 13.6686 21.9819 14.0206 21.9819C14.3722 21.9819 14.7019 21.8453 14.9493 21.5979L23.6166 12.9307C23.8646 12.6825 24.001 12.3512 24 11.999C24.0008 11.6456 23.8646 11.3141 23.6164 11.0663Z"></path>
-											</g>
-											<defs>
-												<clipPath id="clip0_253_4238">
-													<rect width="24" height="24"></rect>
-												</clipPath>
-											</defs>
-										</svg>
-									</button>
-								</Form>
-							)}
-						</Formik>
-					</div>
-				</div>
+									<ErrorMessage name="message" component="div" className="text-red-500 mb-4" />
+								</div>
+								<ReCAPTCHA sitekey="6Le8g3IpAAAAAFixDZCvnUbZRWFS07FWlOVEIWI5" onChange={onRecaptchaChange} className="mb-4" ref={setCaptchaRef}  />
+								<button type="submit" className="group btn bg-primary-light-950 dark:bg-primary-dark-950 rounded-full px-8 py-4 text-xl text-white dark:text-white flex gap-2 items-center" disabled={isSubmitting}>
+									{isSubmitting ? 'Sending...' : 'Send Message'}
+									<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" className="fill-neutral-950 dark:fill-white group-hover:translate-x-1 transition-all duration-300">
+										<g clipPath="url(#clip0_253_4238)">
+											<path d="M23.6164 11.0663L14.9491 2.39884C14.7017 2.15143 14.372 2.01562 14.0204 2.01562C13.6684 2.01562 13.3388 2.15162 13.0914 2.39884L12.3045 3.18596C12.0573 3.43298 11.9211 3.76293 11.9211 4.11473C11.9211 4.46634 12.0573 4.80741 12.3045 5.05443L17.3608 10.1219H1.29657C0.572288 10.1219 0 10.6889 0 11.4134V12.5262C0 13.2507 0.572288 13.8748 1.29657 13.8748H17.4182L12.3047 18.9706C12.0575 19.218 11.9213 19.539 11.9213 19.8908C11.9213 20.2422 12.0575 20.5679 12.3047 20.8151L13.0916 21.5997C13.339 21.8471 13.6686 21.9819 14.0206 21.9819C14.3722 21.9819 14.7019 21.8453 14.9493 21.5979L23.6166 12.9307C23.8646 12.6825 24.001 12.3512 24 11.999C24.0008 11.6456 23.8646 11.3141 23.6164 11.0663Z"></path>
+										</g>
+										<defs>
+											<clipPath id="clip0_253_4238">
+												<rect width="24" height="24"></rect>
+											</clipPath>
+										</defs>
+									</svg>
+								</button>
+							</div>
+						</Form>
+					)}
+				</Formik>
 			</section>
+
+			{/* Contact Information Section */}
 			<section className="pb-24">
 				<div className="container w-[80%] mx-auto">
 					<div className="flex flex-col gap-8 md:flex-row justify-between items-center mx-auto lg:max-w-[950px]">
+						{/* Contact Info Block 1 */}
 						<div className="flex flex-col item-center justify-center text-center">
 							<div className="size-20 rounded-full bg-primary-light-950 dark:bg-primary-dark-950 flex items-center justify-center mx-auto">
 								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="25" viewBox="0 0 30 25" className="fill-white dark:fill-white">
@@ -110,6 +141,7 @@ const Contact = () => {
 								<p className="text-base font-medium text-neutral-700 dark:text-neutral-dark-700 mb-0">support@malegaon-namaz-schedule.in</p>
 							</div>
 						</div>
+						{/* Contact Info Block 2 */}
 						<div className="flex flex-col item-center justify-center text-center">
 							<div className="size-20 rounded-full bg-primary-light-950 dark:bg-primary-dark-950 flex items-center justify-center mx-auto">
 								<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" className="fill-white dark:fill-white">
@@ -124,6 +156,7 @@ const Contact = () => {
 								<p className="text-base font-medium text-neutral-700 dark:text-neutral-dark-700 mb-0">(239) 555-0108</p>
 							</div>
 						</div>
+						{/* Contact Info Block 3 */}
 						<div className="flex flex-col item-center justify-center text-center">
 							<div className="size-20 rounded-full bg-primary-light-950 dark:bg-primary-dark-950 flex items-center justify-center mx-auto">
 								<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" className="fill-white dark:fill-white">
@@ -139,6 +172,8 @@ const Contact = () => {
 					</div>
 				</div>
 			</section>
+
+			{/* Custom CTA Section */}
 			<CustomCTASection
 				heading={<h2 className="text-3xl leading-tight md:text-4xl lg:text-4xl font-bold text-white mb-0"><span className="font-light">Let's</span> Explore The Mosque Locations <span className="font-light">together!</span></h2>}
 				subheading={<p className="text-lg font-medium text-white">Find the Right Direction for Prayer.</p>}

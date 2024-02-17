@@ -33,11 +33,11 @@ const ProtectedRoute = ({ children }) => {
 
         const checkTokenValidity = async () => {
             if (!localStorageToken) {
-                navigate("/m-admin");
+                navigate("/m-admin/login");
             } else {
                 const tokenIsValid = await validateTokenOnServer(localStorageToken);
                 if (!tokenIsValid.status) {
-                    navigate("/m-admin");
+                    navigate("/m-admin/login");
                 }
             }
         };
