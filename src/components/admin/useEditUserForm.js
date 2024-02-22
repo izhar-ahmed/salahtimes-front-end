@@ -55,7 +55,7 @@ const useEditUserForm = (userId) => {
 
     fetchUser();
     fetchRoles();
-  }, []);
+  }, [userId, token, initialValues]);
 
   const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),

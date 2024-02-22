@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router";
 
 const EditTimeTableForm = ({ masjidId }) => {
@@ -83,17 +83,22 @@ const EditTimeTableForm = ({ masjidId }) => {
     setNamazTimeTable(newNamazTimeTable);
   };
 
-  const fetchNamazTimeTable = async (masjidId) => {
+  const fetchNamazTimeTable = useCallback(async (masjidId) => {
     try {
       const GET_NAMAZ_TIMETABLE = `http://localhost:8080/api/namaz-time/${masjidId}`;
-      const response = await axios.get(GET_NAMAZ_TIMETABLE);
+      const response = await axios.get(GET_NAMAZ_TIMETABLE, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return response.data.namazTimeTable;
     } catch (error) {
       console.error("error while submitting form", error);
       throw error;
     }
-  };
-
+  }, [token]);
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -101,11 +106,11 @@ const EditTimeTableForm = ({ masjidId }) => {
         setNamazTimeTable(data);
       } catch (error) {
         // Handle error
-				console.log(error)
+        console.log(error);
       }
     };
     fetchData();
-  }, [masjidId]);
+  }, [masjidId, fetchNamazTimeTable]);
 
   return (
     <>

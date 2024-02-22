@@ -51,7 +51,7 @@ const router = createBrowserRouter([
         element: <TermsAndServices />
       },
       {
-        path: '/masjid/:masjidId',
+        path: '/masjid/:masjidSlug',
         element: <MasjidDetails />
       }
     ]

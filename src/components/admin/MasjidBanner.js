@@ -7,7 +7,8 @@ const MasjidBanner = () => {
 		const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:8080/api/banner');
-        setImage(response.data.banerImage);
+        console.log(response.data)
+        setImage(response.data.bannerImage);
       } catch (error) {
         console.log(error);
       }

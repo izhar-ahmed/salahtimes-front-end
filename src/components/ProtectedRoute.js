@@ -29,7 +29,7 @@ const ProtectedRoute = ({ children }) => {
     };
     useEffect(() => {
         const localStorageToken = localStorage.getItem("token");
-        console.log('localStorageToken', localStorageToken)
+        // console.log('localStorageToken', localStorageToken)
 
         const checkTokenValidity = async () => {
             if (!localStorageToken) {

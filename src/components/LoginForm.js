@@ -17,6 +17,7 @@ const LoginForm = () => {
   const [recaptchaToken, setRecaptchaToken] = useState('');
   const [isVisible, setIsVisible] = useState(true);
   const recaptchaRef = useRef(null);
+  const [csrfToken, setCsrfToken] = useState('');
 
   const handleClose = () => {
     setIsVisible(false);
@@ -34,17 +35,10 @@ const LoginForm = () => {
     }
   };
 
-  const resetCaptcha = () => {
-    // maybe set it till after is submitted
-    if (recaptchaRef.current && typeof recaptchaRef.current.reset !== 'undefined') {
-      recaptchaRef.current.reset();
-    }
-  }
-
   const signIn = async (credential) => {
     try {
       let headers = { headers: { 'Content-Type': 'application/json' } };
-      let response = await axios.post('http://localhost:8080/api/login', { ...credential, recaptchaToken }, headers);
+      let response = await axios.post('http://localhost:8080/api/login', { ...credential, recaptchaToken, _csrf: csrfToken }, headers);
       return response.data.token;
     } catch (error) {
       console.error("error while login", error);
@@ -76,9 +70,20 @@ const LoginForm = () => {
     },
   });
 
-
+ 
 
   useEffect(() => {
+    // Fetch CSRF token from the server when the component mounts
+    const fetchCsrfToken = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/csrf-token');
+        setCsrfToken(response.data.csrfToken);
+      } catch (error) {
+        console.error('Error fetching CSRF token:', error);
+      }
+    };
+
+    fetchCsrfToken();
     if (state && state.successMessage) {
       setSuccessMessage(state.successMessage);
     }
@@ -154,6 +159,11 @@ const LoginForm = () => {
                   }
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
+                />
+                <input 
+                  type="hidden"
+                  name="_csrf"
+                  value={csrfToken}
                 />
                 {formik.touched.password && formik.errors.password ? (
                   <div className="text-red-500 text-sm">{formik.errors.password}</div>

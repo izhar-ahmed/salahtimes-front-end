@@ -6,13 +6,13 @@ const ContactInfo = ({ contactId }) => {
 
     useEffect(() => {
         const fetchContactInfo = async () => {
-					const token = localStorage.getItem('token');
+            const token = localStorage.getItem('token');
             try {
                 const response = await axios.get(`http://localhost:8080/api/contact/get-all-contacts/${contactId}`, {
-									headers: {
-										Authorization: `Bearer ${token}`
-									}
-								});
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 setContact(response.data);
             } catch (error) {
                 console.error('Error fetching contact info:', error);

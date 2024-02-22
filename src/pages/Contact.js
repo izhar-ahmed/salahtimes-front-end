@@ -6,6 +6,8 @@ import Header2 from '../components/Header2';
 import CustomCTASection from '../components/CustomCTASection';
 import ReCAPTCHA from 'react-google-recaptcha';
 import * as DOMPurify from 'dompurify';
+import { Helmet } from "react-helmet-async";
+
 
 const validationSchema = Yup.object().shape({
 	name: Yup.string().required('Name is required'),
@@ -43,7 +45,7 @@ const Contact = () => {
 				acc[key] = DOMPurify.sanitize(values[key]);
 				return acc;
 			}, {});
-			const response = await axios.post('http://localhost:8080/api/contact', {
+			await axios.post('http://localhost:8080/api/contact', {
 				...sanitizedValues,
 				recaptchaToken,
 			});
@@ -69,6 +71,13 @@ const Contact = () => {
 
 	return (
 		<>
+			<Helmet>
+				<title>Contact Us | Salahtimes</title>
+				<meta
+					name="description"
+					content="Get in touch with Salahtimes to discover accurate and reliable Namaz time schedules. Call us, use our live chat widget, or send us an email, and we will get back to you as soon as possible."
+				/>
+			</Helmet>
 			{/* Header Section */}
 			<Header2 heading={<h1 className="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-grey mb-0">Let’s Stay <span className="font-light">Connected</span></h1>} subHeading={`Call us, use our live chat widget or send us an email and we will get back to you as soon as possible.`} />
 
@@ -104,7 +113,7 @@ const Contact = () => {
 									<Field as="textarea" name="message" placeholder="Message" className="textarea-default" />
 									<ErrorMessage name="message" component="div" className="text-red-500 mb-4" />
 								</div>
-								<ReCAPTCHA sitekey="6Le8g3IpAAAAAFixDZCvnUbZRWFS07FWlOVEIWI5" onChange={onRecaptchaChange} className="mb-4" ref={setCaptchaRef}  />
+								<ReCAPTCHA sitekey="6Le8g3IpAAAAAFixDZCvnUbZRWFS07FWlOVEIWI5" onChange={onRecaptchaChange} className="mb-4" ref={setCaptchaRef} />
 								<button type="submit" className="group btn bg-primary-light-950 dark:bg-primary-dark-950 rounded-full px-8 py-4 text-xl text-white dark:text-white flex gap-2 items-center" disabled={isSubmitting}>
 									{isSubmitting ? 'Sending...' : 'Send Message'}
 									<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" className="fill-neutral-950 dark:fill-white group-hover:translate-x-1 transition-all duration-300">

@@ -98,7 +98,7 @@ const MasjidList = () => {
               </p>
               <div className="card-footer w-full">
                 <Link
-                  to={`masjid/${mosque.masjidId}`}
+                  to={`masjid/${mosque.slug}`}
                   className="group btn bg-primary-light-950 rounded-md px-4 py-1.5 text-sm text-white block w-[120px] text-center absolute bottom-4 left-4"
                 >
                   View Details

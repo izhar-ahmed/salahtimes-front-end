@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import CustomCTASection from "../components/CustomCTASection";
 import MasjidList from "../components/MasjidList";
 import MasjidBanner from "../components/admin/MasjidBanner";
+import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
     useEffect(() => {
@@ -9,6 +10,13 @@ const Home = () => {
     }, []);
     return (
         <>
+            <Helmet>
+                <title>Mosque List | Salahtimes</title>
+                <meta
+                    name="description"
+                    content="Explore a comprehensive list of mosques with Salahtimes. Discover accurate and reliable Namaz time schedules and information about our Salahtimes app, empowering communities to observe their religious practices effectively."
+                />
+            </Helmet>
             <MasjidBanner />
             <MasjidList />
             <CustomCTASection

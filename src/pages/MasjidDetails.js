@@ -4,9 +4,10 @@ import { useParams } from "react-router-dom";
 import MasjidData from "../components/MasjidData";
 import Header from "../components/Header";
 import CustomCTASection from "../components/CustomCTASection";
+import { Helmet } from "react-helmet-async";
 
 const MasjidDetails = () => {
-    const { masjidId } = useParams();
+    const { masjidSlug } = useParams();
     const [masjid, setMasjid] = useState({});
     const [namazTime, setNamazTime] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -62,8 +63,8 @@ const MasjidDetails = () => {
         }
     }
     
-    const fetchData = async (masjidId, token) => {
-        const MASJID_API_URL = `http://localhost:8080/api/public/masjid/${masjidId}`;
+    const fetchData = async (masjidSlug, token) => {
+        const MASJID_API_URL = `http://localhost:8080/api/public/masjid/masjid-by-slug/${masjidSlug}`;
         try {
             setLoading(true);
             const response = await axios.get(MASJID_API_URL, {
@@ -88,17 +89,25 @@ const MasjidDetails = () => {
         const newCancelToken = axios.CancelToken.source();
         setCancelToken(newCancelToken);
 
-        fetchData(masjidId, newCancelToken.token);
+        fetchData(masjidSlug, newCancelToken.token);
 
         return () => {
             if (newCancelToken) {
                 newCancelToken.cancel('Component unmounted.');
             }
         };
-    }, [masjidId]);
+    }, [masjidSlug]);
 
     return (
         <>
+            <Helmet>
+                <title>{masjid.masjidName ? `${masjid.masjidName} | Salahtimes` : 'Salahtimes'}</title>
+                <meta
+                    name="description"
+                    content={masjid.masjidName ? `Explore detailed information about ${masjid.masjidName} including its address, prayer timings, and facilities. Discover accurate and reliable Namaz time schedules and directions to the mosque. Salahtimes empowers communities to observe their religious practices effectively.` : `Explore detailed information about masjid including its address, prayer timings, and facilities. Discover accurate and reliable Namaz time schedules and directions to the mosque. Salahtimes empowers communities to observe their religious practices effectively.`}
+                />
+            </Helmet>
+
             <Header
                 heading={<h1 className="text-4xl leading-tight md:text-4xl lg:text-5xl font-bold text-grey mb-0"><span className="font-light">Explore</span> <span className='uppercase'>{masjid.masjidName}</span> <span className="font-light">Details</span></h1>}
                 subHeading={`ADDRESS: ${masjid.masjidAddress}`}
