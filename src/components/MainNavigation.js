@@ -98,7 +98,7 @@ const MainNavigation = () => {
             </header>
             {
                 isHome ?
-                    <div className="relative isolate px-6 pt-14 lg:px-8 overflow-hidden">
+                    <div className="relative isolate px-6 lg:pt-14 lg:px-8 overflow-hidden">
                         <div
                             className="absolute inset-x-0 -top-40 -z-10 transform-gpu blur-3xl sm:-top-80"
                             aria-hidden="true"
@@ -111,9 +111,9 @@ const MainNavigation = () => {
                                 }}
                             />
                         </div>
-                        <div className="mx-auto max-w-2xl py-20 sm:py-32 lg:py-16">
+                        <div className="mx-auto max-w-2xl sm:py-32 lg:py-16">
                             <div className="text-center">
-                                <h1 className="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-grey mb-0">
+                                <h1 className="text-3xl leading-tight md:text-6xl lg:text-6xl font-bold text-grey mb-0">
                                     Welcome To <span className="font-light">[Your App]</span>
                                 </h1>
                                 <p className="mt-6 text-lg font-bold text-neutral-700">

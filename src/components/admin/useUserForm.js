@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { addUserAPI, getRoleAPI } from '../../util/util';
 
 const useUserForm = () => {
   const [loading, setLoading] = useState(false);
@@ -16,7 +17,7 @@ const useUserForm = () => {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/role', {
+        const response = await axios.get(getRoleAPI, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -50,7 +51,7 @@ const useUserForm = () => {
       setLoading(true);
       setError(null);
 
-      const response = await axios.post('http://localhost:8080/api/users/add', values, {
+      const response = await axios.post(addUserAPI, values, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

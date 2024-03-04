@@ -1,10 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import { imgUrl, getAllMasjidAPI } from "../../util/util";
 const MasjidInfo = ({ masjidId }) => {
   const [masjid, setMasjid] = useState({});
   const [namazTime, setNamazTime] = useState([]);
-  const imgUrl = "http://localhost:8080/uploads/";
 
   // Function to check if azaanTime is upcoming
   const isUpcomingAzaan = (azaanTime) => {
@@ -21,11 +20,10 @@ const MasjidInfo = ({ masjidId }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const masjidApi = `http://localhost:8080/api/masjid/${masjidId}`;
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(masjidApi, {
+        const response = await axios.get(getAllMasjidAPI + masjidId, {
           headers: {
             Authorization: `Bearer ${token}`
           }

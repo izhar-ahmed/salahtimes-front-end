@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createMasjidAPI } from '../../util/util';
 
 const MasjidForm = () => {
   const [masjidName, setMasjidName] = useState('');
@@ -32,9 +33,8 @@ const MasjidForm = () => {
     formData.append('masjidGoogleMapLink', masjidMapLink);
 
     // Pass the FormData object to the parent component
-    const createMasjid = 'http://localhost:8080/api/masjid/add';
     try {
-      const response = await axios.post(createMasjid, formData, {
+      const response = await axios.post(createMasjidAPI, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`,

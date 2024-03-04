@@ -16,7 +16,7 @@ const Header = ({ heading, subHeading }) => {
 					}}
 				/>
 			</div>
-			<div className="mx-auto max-w-2xl py-16 sm:py-16 lg:py-16">
+			<div className="mx-auto max-w-2xl sm:py-16 lg:py-16">
 				<div className="text-center">
 					{heading}
 					<p className="mt-6 text-lg font-bold text-neutral-700">

@@ -5,6 +5,7 @@ import MasjidData from "../components/MasjidData";
 import Header from "../components/Header";
 import CustomCTASection from "../components/CustomCTASection";
 import { Helmet } from "react-helmet-async";
+import { getMasjidById } from "../util/util";
 
 const MasjidDetails = () => {
     const { masjidSlug } = useParams();
@@ -64,10 +65,9 @@ const MasjidDetails = () => {
     }
     
     const fetchData = async (masjidSlug, token) => {
-        const MASJID_API_URL = `http://localhost:8080/api/public/masjid/masjid-by-slug/${masjidSlug}`;
         try {
             setLoading(true);
-            const response = await axios.get(MASJID_API_URL, {
+            const response = await axios.get(getMasjidById + masjidSlug, {
                 cancelToken: token
             });
             const masjidData = response.data.masjid;
@@ -109,7 +109,7 @@ const MasjidDetails = () => {
             </Helmet>
 
             <Header
-                heading={<h1 className="text-4xl leading-tight md:text-4xl lg:text-5xl font-bold text-grey mb-0"><span className="font-light">Explore</span> <span className='uppercase'>{masjid.masjidName}</span> <span className="font-light">Details</span></h1>}
+                heading={<h1 className="text-3xl leading-tight md:text-4xl lg:text-5xl font-bold text-grey mb-0"><span className="font-light">Explore</span> <span className='uppercase'>{masjid.masjidName}</span> <span className="font-light">Details</span></h1>}
                 subHeading={`ADDRESS: ${masjid.masjidAddress}`}
             />
 
@@ -121,7 +121,7 @@ const MasjidDetails = () => {
             />
 
             <CustomCTASection
-                heading={<h2 className="text-4xl leading-tight md:text-4xl lg:text-4xl font-bold text-white mb-0"><span className="font-light">Let's Explore</span> The Mosque Locations <span className="font-light">together!</span></h2>}
+                heading={<h2 className="text-2xl leading-tight md:text-4xl lg:text-4xl font-bold text-white mb-0"><span className="font-light">Let's Explore</span> The Mosque Locations <span className="font-light">together!</span></h2>}
                 subheading={<p className="text-lg font-medium text-white">Find the Right Direction for Prayer.</p>}
                 exploreLabel="Explore Mosques"
                 directionsLabel="Get Directions"

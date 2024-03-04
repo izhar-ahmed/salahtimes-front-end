@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { imgUrl, getBanner } from "../util/util";
 const MasjidBanner = () => {
 	const [image, setImage] = useState(null);
-	const imgUrl = "http://localhost:8080/uploads/";
 	useEffect(()=> {
 		const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/banner');
+        const response = await axios.get(getBanner);
         console.log(response.data)
         setImage(response.data.bannerImage);
       } catch (error) {

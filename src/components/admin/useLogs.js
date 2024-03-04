@@ -1,5 +1,6 @@
 // useLogs.js
 import { useState, useEffect } from 'react';
+import {getLogsAPI} from '../../util/util';
 
 const useLogs = () => {
   const [logs, setLogs] = useState([]);
@@ -10,7 +11,7 @@ const useLogs = () => {
   useEffect(() => {
     const fetchLogs = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/logs', {
+        const response = await fetch(getLogsAPI, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

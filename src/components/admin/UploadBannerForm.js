@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { addBannerAPI } from '../../util/util';
 
 const UploadBannerForm = () => {
 	const [image, setImage] = useState(null);
@@ -16,7 +17,7 @@ const UploadBannerForm = () => {
 		formData.append('banerImage', image);
 
 		try {
-			await axios.post('http://localhost:8080/api/banner/add', formData, {
+			await axios.post(addBannerAPI, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
 					'Authorization': `Bearer ${token}`,

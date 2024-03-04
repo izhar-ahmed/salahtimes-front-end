@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import useContacts from './../../components/admin/useContacts';
 import DeleteConfirmation from '../../components/admin/DeleteConfirmation';
 import axios from 'axios';
+import { deleteContactAPI } from '../../util/util';
 
 const Contacts = () => {
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -73,10 +74,8 @@ const Contacts = () => {
   const handleConfirmDelete = async () => {
 		try {
 			const token = localStorage.getItem('token');
-			const deleteApi = `http://localhost:8080/api/contact/delete-contact/${deleteContactId}`;
-
 			// Make the DELETE request
-			await axios.delete(deleteApi, {
+			await axios.delete(deleteContactAPI+deleteContactId, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 					'Content-Type': 'application/json',

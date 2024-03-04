@@ -18,6 +18,7 @@ const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(true);
   const recaptchaRef = useRef(null);
   const [csrfToken, setCsrfToken] = useState('');
+  const [cancelToken, setCancelToken] = useState(null);
 
   const handleClose = () => {
     setIsVisible(false);
@@ -70,23 +71,43 @@ const LoginForm = () => {
     },
   });
 
- 
+  function generateUniqueString(length = 10) {
+    const timestamp = new Date().getTime().toString(36);
+    const randomString = Math.random().toString(36).substr(2, length);
+    return timestamp + randomString;
+  }
+
+  // Fetch CSRF token from the server when the component mounts
+  const fetchCsrfToken = async (token) => {
+    try {
+      const uniqueString = generateUniqueString();
+      const response = await axios.get(`http://localhost:8080/api/csrf-token/${uniqueString}`, {
+        cancelToken: token
+      });
+      setCsrfToken(response.data.csrfToken);
+    } catch (error) {
+      console.error('Error fetching CSRF token:', error);
+    }
+  };
 
   useEffect(() => {
-    // Fetch CSRF token from the server when the component mounts
-    const fetchCsrfToken = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/api/csrf-token');
-        setCsrfToken(response.data.csrfToken);
-      } catch (error) {
-        console.error('Error fetching CSRF token:', error);
-      }
-    };
+    if (cancelToken) {
+      cancelToken.cancel('Operation canceled by the user.');
+    }
+    const newCancelToken = axios.CancelToken.source();
+    setCancelToken(newCancelToken);
 
-    fetchCsrfToken();
+    fetchCsrfToken(newCancelToken.token);
+
     if (state && state.successMessage) {
       setSuccessMessage(state.successMessage);
     }
+
+    return () => {
+      if (newCancelToken) {
+        newCancelToken.cancel('Component unmounted.');
+      }
+    };
   }, [state]);
 
   return (
@@ -160,7 +181,7 @@ const LoginForm = () => {
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
                 />
-                <input 
+                <input
                   type="hidden"
                   name="_csrf"
                   value={csrfToken}

@@ -5,6 +5,7 @@ import './MasjidTable.css'
 import { Link, useNavigate } from 'react-router-dom';
 import DeleteConfirmation from './DeleteConfirmation';
 import { PlusIcon } from '@heroicons/react/24/solid';
+import { getAllMasjidAPI } from '../../util/util';
 
 const MasjidTable = () => {
 	const [masjidData, setMasjidData] = useState([])
@@ -27,10 +28,9 @@ const MasjidTable = () => {
 	// fetch all masjid data and set state
 	const fetchMasjidData = async () => {
 		const token = localStorage.getItem("token");
-		const getAllMasjid = "http://localhost:8080/api/masjid";
 
 		try {
-			const response = await axios.get(getAllMasjid, {
+			const response = await axios.get(getAllMasjidAPI, {
 				headers: {
 					Authorization: `Bearer ${token}`
 				}
@@ -106,10 +106,9 @@ const MasjidTable = () => {
 	const handleConfirmDelete = async () => {
 		try {
 			const token = localStorage.getItem('token');
-			const deleteApi = `http://localhost:8080/api/masjid/${deleteMasjidId}`;
 
 			// Make the DELETE request
-			await axios.delete(deleteApi, {
+			await axios.delete(getAllMasjidAPI + deleteMasjidId, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 					'Content-Type': 'application/json',

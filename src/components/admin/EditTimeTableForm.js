@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router";
+import { editNamazTimeAPI } from "../../util/util";
 
 const EditTimeTableForm = ({ masjidId }) => {
   const [namazTimeTable, setNamazTimeTable] = useState([
@@ -59,8 +60,7 @@ const EditTimeTableForm = ({ masjidId }) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     // console.log(namazTimeTable);
-    const createNamazTimeApi = `http://localhost:8080/api/namaz-time/update/${masjidId}`;
-    const response = await axios.put(createNamazTimeApi, namazTimeTable, {
+    const response = await axios.put(editNamazTimeAPI + masjidId, namazTimeTable, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

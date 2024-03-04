@@ -3,16 +3,14 @@ import React from "react";
 
 const MasjidData = ({ masjid, namazTime, loading, error }) => {
   return (
-    <div className="container mx-auto my-5">
-      <div className="flex flex-wrap">
-        <div className="w-full p-4">
+    <div className="container mx-auto my-5 p-4 lg:p-0">
           {namazTime.length === 0 ? (
             <div className="text-center">
               <h1 className="text-2xl font-bold">Add namaz time table for this masjid</h1>
             </div>
           ) : (
             <div key={masjid.masjidId} className="mb-8 mt-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
                 {namazTime.map((prayer) => (
                   <div key={prayer.id} className={prayer.selected ? "bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 p-4 rounded-md shadow-md border border-white-300 text-white selected" : "bg-white p-4 rounded-md shadow-md border border-gray-300"}>
                     {prayer.selected ? <p>Upcoming Prayer</p> : ''}
@@ -24,9 +22,6 @@ const MasjidData = ({ masjid, namazTime, loading, error }) => {
               </div>
             </div>
           )}
-        </div>
-        <div className="flex"></div> 
-      </div>
     </div>
   );
 };

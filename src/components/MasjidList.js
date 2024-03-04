@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useMosqueGallery from "./useMosqueGallery";
 import "../pages/Common.css";
+import { imgUrl } from "../util/util";
 
 const MasjidList = () => {
   const { mosques, loading } = useMosqueGallery();
-  const imgUrl = "http://localhost:8080/uploads/";
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 6; // Number of items per page
+  const pageSize = 10; // Number of items per page
 
   const filteredMosques = mosques.filter((mosque) =>
     mosque.masjidArea.toLowerCase().includes(searchTerm.toLowerCase())
@@ -29,13 +29,13 @@ const MasjidList = () => {
   }
 
   return (
-    <div className="container w-[80%] mx-auto mb-20">
-      <h2 className="text-3xl font-bold text-gray-800 mb-8 uppercase">
+    <div className="container mx-auto mb-20">
+      <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 lg:mb-8 uppercase">
         Explore Local Masjids
       </h2>
 
       {/* Search Bar */}
-      <div className="mb-4 w-[30%]">
+      <div className="mb-4 lg:w-[30%]">
         <form>
           <label
             htmlFor="search"

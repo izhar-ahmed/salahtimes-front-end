@@ -6,6 +6,7 @@ import DeleteConfirmation from '../../components/admin/DeleteConfirmation';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { PlusIcon } from '@heroicons/react/24/solid'
+import { getAllUserAPI, deleteUserAPI } from '../../util/util';
 
 const Users = () => {
   const [users, setUsers] = useState([])
@@ -62,10 +63,9 @@ const Users = () => {
     // Perform delete action here 
     try {
       const token = localStorage.getItem('token');
-      const deleteApi = `http://localhost:8080/api/users/delete-user/${selectedUser.id}`;
 
       // Make the DELETE request
-      await axios.delete(deleteApi, {
+      await axios.delete(deleteUserAPI+selectedUser.id, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ const Users = () => {
   
   const fetchUserData = useCallback(async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/users', {
+      const response = await axios.get(getAllUserAPI, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

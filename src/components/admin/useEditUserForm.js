@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { getRoleAPI, getUserAPI } from '../../util/util';
 
 const useEditUserForm = (userId) => {
   const [loading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ const useEditUserForm = (userId) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/users/get-user/${userId}`, {
+        const response = await axios.get(getUserAPI+userId, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -41,7 +42,7 @@ const useEditUserForm = (userId) => {
 
     const fetchRoles = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/role', {
+        const response = await axios.get(getRoleAPI, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

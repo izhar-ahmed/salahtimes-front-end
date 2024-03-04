@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { getAllMasjidAPI } from "../../util/util";
 
 
 const EditMasjidForm = ({masjidId}) => {
@@ -21,8 +22,7 @@ const EditMasjidForm = ({masjidId}) => {
 	const GetMasjidDetails = useCallback(async () => {
     const token = localStorage.getItem('token');
     try {
-      const getMasjidApi = `http://localhost:8080/api/masjid/${masjidId}`;
-      const response = await axios.get(getMasjidApi, {
+      const response = await axios.get(getAllMasjidAPI+masjidId, {
         headers: {
           Authorization: `Bearer ${token}`,
         }
@@ -56,9 +56,8 @@ const EditMasjidForm = ({masjidId}) => {
 		formData.append('masjidGoogleMapLink', masjidGoogleMapLink);
 	
 		// Pass the FormData object to the parent component
-		const createMasjid = `http://localhost:8080/api/masjid/${masjidId}`;
 		try {
-			const response = await axios.put(createMasjid, formData, {
+			const response = await axios.put(getAllMasjidAPI + masjidId, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
 					'Authorization': `Bearer ${token}`,

@@ -7,6 +7,7 @@ import CustomCTASection from '../components/CustomCTASection';
 import ReCAPTCHA from 'react-google-recaptcha';
 import * as DOMPurify from 'dompurify';
 import { Helmet } from "react-helmet-async";
+import { createContact } from '../util/util';
 
 
 const validationSchema = Yup.object().shape({
@@ -45,7 +46,7 @@ const Contact = () => {
 				acc[key] = DOMPurify.sanitize(values[key]);
 				return acc;
 			}, {});
-			await axios.post('http://localhost:8080/api/contact', {
+			await axios.post(createContact, {
 				...sanitizedValues,
 				recaptchaToken,
 			});
@@ -79,7 +80,7 @@ const Contact = () => {
 				/>
 			</Helmet>
 			{/* Header Section */}
-			<Header2 heading={<h1 className="text-5xl leading-tight md:text-6xl lg:text-6xl font-bold text-grey mb-0">Let’s Stay <span className="font-light">Connected</span></h1>} subHeading={`Call us, use our live chat widget or send us an email and we will get back to you as soon as possible.`} />
+			<Header2 heading={<h1 className="text-2xl leading-tight md:text-6xl lg:text-6xl font-bold text-grey mb-0">Let’s Stay <span className="font-light">Connected</span></h1>} subHeading={`Call us, use our live chat widget or send us an email and we will get back to you as soon as possible.`} />
 
 			{/* Contact Form Section */}
 			<section className="pb-20">
@@ -184,7 +185,7 @@ const Contact = () => {
 
 			{/* Custom CTA Section */}
 			<CustomCTASection
-				heading={<h2 className="text-3xl leading-tight md:text-4xl lg:text-4xl font-bold text-white mb-0"><span className="font-light">Let's</span> Explore The Mosque Locations <span className="font-light">together!</span></h2>}
+				heading={<h2 className="text-2xl leading-tight md:text-4xl lg:text-4xl font-bold text-white mb-0"><span className="font-light">Let's</span> Explore The Mosque Locations <span className="font-light">together!</span></h2>}
 				subheading={<p className="text-lg font-medium text-white">Find the Right Direction for Prayer.</p>}
 				exploreLabel="Explore Mosques"
 				directionsLabel="Get Directions"
