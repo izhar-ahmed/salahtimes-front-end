@@ -8,7 +8,7 @@ const About = () => {
   return (
     <>
       <Helmet>
-        <title>Salahtimes About | Empowering Communities with Accurate Namaz Timings</title>
+        <title>About Us | Empowering Communities with Accurate Namaz Timings</title>
         <meta
           name="description"
           content="Discover Salahtimes, your trusted source for accurate and reliable Namaz time schedules. Empowering communities to observe their religious practices effectively."
@@ -18,7 +18,7 @@ const About = () => {
         <Header2
           heading={
             <h2 className="text-2xl sm:text-2xl md:text-3xl lg:text-6xl font-semibold text-gray-700 mb-2">
-              Our <span className="font-light">Mission</span>
+              About <span className="font-light">Us</span>
             </h2>
           }
           subHeading={<p className="mt-6 text-lg font-bold text-neutral-700">Discover our commitment to empowering communities with accurate Namaz time schedulez</p>}
