@@ -1,7 +1,7 @@
 // useMosqueGallery.js
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { getAllMasjids } from '../util/util';
+import { consts } from '../../util/APIEndpoints';
 
 const useMosqueGallery = () => {
 	const [mosques, setMosques] = useState([]);
@@ -13,7 +13,7 @@ const useMosqueGallery = () => {
 		const fetchMosques = async () => {
 			try {
 				// For now, let's use sample data
-				const response = await axios.get(getAllMasjids);
+				const response = await axios.get(consts.GET_ALL_MASJIDS_API);
 				setMosques(response.data.masjidWithNamazIds)
 				setLoading(false);
 			} catch (error) {

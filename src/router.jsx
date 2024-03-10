@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from './pages/Home';
-import RootLayout from "./pages/Root";
 import MasjidDetails from "./pages/MasjidDetails";
 import Login from "./pages/admin/Login";
 import Dashboard from "./pages/admin/Dashboard";
@@ -27,11 +26,12 @@ import TermsAndServices from "./pages/TermsAndServices";
 import Contacts from "./pages/admin/Contacts";
 import Banner from "./pages/admin/Banner";
 import ContactDetails from "./pages/admin/ContactDetails";
+import MainLayout from "./layouts/MainLayout";
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootLayout />,
+    element: <MainLayout />,
     errorElement: <NotFound />,
     children: [
       {

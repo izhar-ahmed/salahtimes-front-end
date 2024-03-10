@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import Header2 from '../components/Header2';
+import Header2 from '../components/common/Header2';
 import CustomCTASection from '../components/CustomCTASection';
 import ReCAPTCHA from 'react-google-recaptcha';
 import * as DOMPurify from 'dompurify';
@@ -185,7 +185,7 @@ const Contact = () => {
 
 			{/* Custom CTA Section */}
 			<CustomCTASection
-				heading={<h2 className="text-2xl leading-tight md:text-4xl lg:text-4xl font-bold text-white mb-0"><span className="font-light">Let's</span> Explore The Mosque Locations <span className="font-light">together!</span></h2>}
+				heading={<h2 className="text-2xl leading-tight md:text-4xl lg:text-4xl font-bold text-white mb-0"><span className="font-light">Let&apos;s</span> Explore The Mosque Locations <span className="font-light">together!</span></h2>}
 				subheading={<p className="text-lg font-medium text-white">Find the Right Direction for Prayer.</p>}
 				exploreLabel="Explore Mosques"
 				directionsLabel="Get Directions"

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import useMosqueGallery from "./useMosqueGallery";
-import "../pages/Common.css";
-import { imgUrl } from "../util/util";
+import useMosqueGallery from "../../hooks/Home/useMosqueGallery";
+import "./../../pages/Common.css";
+import { imgUrl } from "./../../util/util";
 
 const MasjidList = () => {
   const { mosques, loading } = useMosqueGallery();
@@ -25,7 +25,11 @@ const MasjidList = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="container mx-auto mb-20">
+        <p>Loading...</p>
+      </div>
+    )
   }
 
   return (
