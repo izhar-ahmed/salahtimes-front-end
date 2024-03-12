@@ -32,7 +32,6 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <MainLayout />,
-    errorElement: <NotFound />,
     children: [
       {
         path: '/',
@@ -53,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: '/masjid/:masjidSlug',
         element: <MasjidDetails />
+      },
+      {
+        path: '*',
+        element: <NotFound />
       }
     ]
   },

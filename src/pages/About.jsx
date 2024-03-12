@@ -13,7 +13,7 @@ const About = () => {
     <>
       {/* SEO */}
       <Helmet>
-        <title>About Us | Empowering Communities with Accurate Namaz Timings</title>
+        <title>About Us | Salahtimes</title>
       </Helmet>
 
       {/* Hero Section */}

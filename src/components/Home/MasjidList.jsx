@@ -26,14 +26,14 @@ const MasjidList = () => {
 
   if (loading) {
     return (
-      <div className="container mx-auto mb-20">
+      <div className="container mx-auto px-4">
         <p>Loading...</p>
       </div>
     )
   }
 
   return (
-    <div className="container mx-auto mb-20">
+    <div className="container px-4 mx-auto mb-20">
       <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 lg:mb-8 uppercase">
         Explore Local Masjids
       </h2>

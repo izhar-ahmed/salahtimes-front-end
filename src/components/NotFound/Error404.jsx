@@ -1,5 +1,6 @@
-import errorImage from '../img/404.svg';
-import '../pages/Common.css'
+import errorImage from './404.svg';
+import PropTypes from 'prop-types';
+
 const Error404 = ({heading}) => {
 	return (
 		<>
@@ -14,7 +15,7 @@ const Error404 = ({heading}) => {
 								404
 							</h1>
 							<h6 className="text-5xl text-neutral-950 dark:text-neutral-dark-950 font-bold mb-2">
-								Oops! We Can’t find that page
+								Oops! We Can&apos;t find that page
 							</h6>
 							{heading}
 						</div>
@@ -24,6 +25,10 @@ const Error404 = ({heading}) => {
 		</>
 
 	);
+}
+
+Error404.propTypes = {
+  heading: PropTypes.element.isRequired
 }
 
 export default Error404;

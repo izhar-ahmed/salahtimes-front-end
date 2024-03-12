@@ -12,8 +12,10 @@ const MasjidBanner = () => {
   }
 
   return (
-    <div className="bg-gray-200 container px-4 mx-auto">
-      <img src={bannerIMG} alt="Masjid Banner IMG" className="object-cover w-full h-[300px]" />
+    <div className="container px-4 mx-auto">
+      <div className="bg-gray-200">
+        <img src={bannerIMG} alt="Masjid Banner IMG" className="object-cover w-full h-[300px]" />
+      </div>
     </div>
   );
 };
