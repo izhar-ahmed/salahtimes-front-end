@@ -1,4 +1,4 @@
-const AdminFooter = () => {
+const AdminLayoutFooter = () => {
   return (
     <footer className="bg-gray-800 text-white py-4 text-center">
       <p>&copy; {new Date().getFullYear()} Your Mosque App. All rights reserved.</p>
@@ -6,4 +6,4 @@ const AdminFooter = () => {
   );
 };
 
-export default AdminFooter;
+export default AdminLayoutFooter;

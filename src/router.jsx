@@ -4,7 +4,7 @@ import MasjidDetails from "./pages/MasjidDetails";
 import Login from "./pages/admin/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
-import AdminLayout from "./pages/AdminRoot";
+import AdminLayout from "@/layouts/AdminLayout";
 import Masjid from "./pages/admin/Masjid";
 import AddMasjid from "./pages/admin/AddMasjid";
 import EditMasjid from "./pages/admin/EditMasjid";
@@ -82,6 +82,7 @@ const router = createBrowserRouter([
       {
         path: "masjid",
         element: <Masjid />,
+        
       },
       {
         path: 'masjid/add-masjid',

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { addNamazTimeAPI } from "../../util/util";
+import PropTypes from "prop-types";
 
 const AddTimeTableForm = ({ masjidId }) => {
 	const [namazTimeTable, setNamazTimeTable] = useState([
@@ -166,5 +167,10 @@ const AddTimeTableForm = ({ masjidId }) => {
 		</>
 	);
 }
+
+AddTimeTableForm.propTypes = {
+	masjidId: PropTypes.string
+}
+
 
 export default AddTimeTableForm;

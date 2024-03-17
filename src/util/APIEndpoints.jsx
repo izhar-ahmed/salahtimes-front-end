@@ -19,4 +19,5 @@ export const consts = {
 	GET_ALL_CONTACT_API: `${BASE_URL}/api/contact/get-all-contacts/`,
 	DELETE_CONTACT_API: (id) => `${BASE_URL}/api/contact/delete-contact/${id}`,
 	CREATE_CONTACT_API: `${BASE_URL}/api/contact`,
+	GET_ALL_DASHBOARD_API: `${BASE_URL}/api/dashboard`,
 }

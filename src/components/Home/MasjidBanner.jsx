@@ -1,7 +1,26 @@
-import useMasjidBanner from "../../hooks/Home/useMasjidBanner";
+
+import { consts } from "@/util/APIEndpoints";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const MasjidBanner = () => {
-	const { bannerIMG, loading } = useMasjidBanner()
+  const [imageURL, setImageURL] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+	useEffect(()=> {
+		const fetchData = async () => {
+      try {
+        const response = await axios.get(consts.GET_BANNER_API);
+        setImageURL(consts.IMG_URL(response.data.bannerImage));
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    };
+    
+    fetchData();
+	},[imageURL])
 	
   if (loading) {
     return (
@@ -14,7 +33,7 @@ const MasjidBanner = () => {
   return (
     <div className="container px-4 mx-auto">
       <div className="bg-gray-200">
-        <img src={bannerIMG} alt="Masjid Banner IMG" className="object-cover w-full h-[300px]" />
+        <img src={imageURL} alt="Masjid Banner IMG" className="object-cover w-full h-[300px]" />
       </div>
     </div>
   );

@@ -79,7 +79,6 @@ const MasjidTable = () => {
 				</>
 			),
 			ignoreRowClick: true,
-			button: true,
 			width: '400px',
 		},
 	];

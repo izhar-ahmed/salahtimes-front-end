@@ -1,7 +1,7 @@
 // useMasjidBanner.js
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { consts } from '../../util/APIEndpoints';
+import { consts } from '@/util/APIEndpoints';
 
 const useMasjidBanner = () => {
 	const [imageURL, setImageURL] = useState(null);
@@ -11,17 +11,16 @@ const useMasjidBanner = () => {
 		const fetchData = async () => {
       try {
         const response = await axios.get(consts.GET_BANNER_API);
-				const bannerIMG = consts.IMG_URL(response.data.bannerImage)
-        setImageURL(bannerIMG);
+        setImageURL(consts.IMG_URL(response.data.bannerImage));
+        setLoading(false);
       } catch (error) {
         console.log(error);
-      } finally {
         setLoading(false);
       }
     };
-
+    
     fetchData();
-	},[])
+	},[imageURL])
 
 	return { imageURL, loading };
 };

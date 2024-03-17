@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import ForgotPasswordLink from './admin/ForgotPasswordLink';
+import ForgotPasswordLink from './ForgotPasswordLink';
 import ReCAPTCHA from 'react-google-recaptcha';
-import * as DOMPurify from 'dompurify';
+import DOMPurify from 'dompurify';
 import { useLocation } from 'react-router-dom';
 
 
@@ -40,7 +40,11 @@ const LoginForm = () => {
     try {
       let headers = { headers: { 'Content-Type': 'application/json' } };
       let response = await axios.post('http://localhost:8080/api/login', { ...credential, recaptchaToken, _csrf: csrfToken }, headers);
-      return response.data.token;
+      return {
+        "token": response.data.token,
+        "name": response.data.name,
+        "isAdmin": response.data.roles[0].Roles.includes("Admin")
+      }
     } catch (error) {
       console.error("error while login", error);
       navigate('/m-admin/login');
@@ -62,7 +66,9 @@ const LoginForm = () => {
         if (!authToken) {
           navigate('/m-admin/login');
         } else {
-          localStorage.setItem('token', authToken);
+          localStorage.setItem('token', authToken.token);
+          localStorage.setItem('isAdmin', authToken.isAdmin)
+          localStorage.setItem('name', authToken.name)
           navigate('/m-admin');
         }
       } catch (error) {
