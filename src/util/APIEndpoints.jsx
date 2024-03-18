@@ -18,6 +18,8 @@ export const consts = {
 	GET_ALL_LOGS_API: `${BASE_URL}/api/logs`,
 	GET_ALL_CONTACT_API: `${BASE_URL}/api/contact/get-all-contacts/`,
 	DELETE_CONTACT_API: (id) => `${BASE_URL}/api/contact/delete-contact/${id}`,
+	GET_CSRF_TOKEN: (uniqueStr) => `${BASE_URL}/api/csrf-token/${uniqueStr}`,
 	CREATE_CONTACT_API: `${BASE_URL}/api/contact`,
 	GET_ALL_DASHBOARD_API: `${BASE_URL}/api/dashboard`,
+	LOGIN_API: `${BASE_URL}/api/login`,
 }

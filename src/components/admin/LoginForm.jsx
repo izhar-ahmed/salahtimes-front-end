@@ -7,6 +7,7 @@ import ForgotPasswordLink from './ForgotPasswordLink';
 import ReCAPTCHA from 'react-google-recaptcha';
 import DOMPurify from 'dompurify';
 import { useLocation } from 'react-router-dom';
+import { consts } from '@/util/APIEndpoints';
 
 
 const LoginForm = () => {
@@ -39,7 +40,7 @@ const LoginForm = () => {
   const signIn = async (credential) => {
     try {
       let headers = { headers: { 'Content-Type': 'application/json' } };
-      let response = await axios.post('http://localhost:8080/api/login', { ...credential, recaptchaToken, _csrf: csrfToken }, headers);
+      let response = await axios.post(consts.LOGIN_API, { ...credential, recaptchaToken, _csrf: csrfToken }, headers);
       return {
         "token": response.data.token,
         "name": response.data.name,
@@ -87,7 +88,7 @@ const LoginForm = () => {
   const fetchCsrfToken = async (token) => {
     try {
       const uniqueString = generateUniqueString();
-      const response = await axios.get(`http://localhost:8080/api/csrf-token/${uniqueString}`, {
+      const response = await axios.get(consts.GET_CSRF_TOKEN(uniqueString), {
         cancelToken: token
       });
       setCsrfToken(response.data.csrfToken);
