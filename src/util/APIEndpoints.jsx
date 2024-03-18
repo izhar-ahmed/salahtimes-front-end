@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8080'
+const BASE_URL = 'http://ec2-16-171-146-39.eu-north-1.compute.amazonaws.com'
 export const consts = {
 	// API's
 	IMG_URL: (filename) => `${BASE_URL}/uploads/${filename}`,
