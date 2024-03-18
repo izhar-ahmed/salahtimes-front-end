@@ -22,4 +22,5 @@ export const consts = {
 	CREATE_CONTACT_API: `${BASE_URL}/api/contact`,
 	GET_ALL_DASHBOARD_API: `${BASE_URL}/api/dashboard`,
 	LOGIN_API: `${BASE_URL}/api/login`,
+	VALIDATE_API: `${BASE_URL}/api/validate-token`,
 }

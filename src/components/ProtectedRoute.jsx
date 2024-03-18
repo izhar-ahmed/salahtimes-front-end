@@ -4,6 +4,7 @@ import axios from "axios";
 import menuOthers from "@/layouts/menuOthers";
 
 import PropTypes from "prop-types";
+import { consts } from "@/util/APIEndpoints";
 
 const ProtectedRoute = ({ children }) => {
     const navigate = useNavigate();
@@ -12,7 +13,7 @@ const ProtectedRoute = ({ children }) => {
 
     const validateTokenOnServer = async (token) => {
         try {
-            const response = await axios.post("http://localhost:8080/api/validate-token", {}, { headers: { "Content-Type": "application/json", Authorization: "Bearer " + token } });
+            const response = await axios.post(consts.VALIDATE_API, {}, { headers: { "Content-Type": "application/json", Authorization: "Bearer " + token } });
             if (response.status === 200) {
                 return {
                     status: true,
