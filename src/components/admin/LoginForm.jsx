@@ -40,7 +40,7 @@ const LoginForm = () => {
   const signIn = async (credential) => {
     try {
       let headers = { headers: { 'Content-Type': 'application/json' } };
-      let response = await axios.post(consts.LOGIN_API, { ...credential, recaptchaToken, _csrf: csrfToken }, headers);
+      let response = await axios.post(consts.LOGIN_API_PUBLIC, { ...credential, recaptchaToken, _csrf: csrfToken }, headers);
       return {
         "token": response.data.token,
         "name": response.data.name,

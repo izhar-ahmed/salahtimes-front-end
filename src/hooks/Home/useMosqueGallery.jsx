@@ -13,7 +13,7 @@ const useMosqueGallery = () => {
 		const fetchMosques = async () => {
 			try {
 				// For now, let's use sample data
-				const response = await axios.get(consts.GET_ALL_MASJIDS_API);
+				const response = await axios.get(consts.GET_ALL_MASJIDS_API_PUBLIC);
 				setMosques(response.data.masjidWithNamazIds)
 				setLoading(false);
 			} catch (error) {

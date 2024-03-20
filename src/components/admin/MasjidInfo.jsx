@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { imgUrl, getAllMasjidAPI } from "../../util/util";
+import PropTypes from "prop-types";
+
 const MasjidInfo = ({ masjidId }) => {
   const [masjid, setMasjid] = useState({});
   const [namazTime, setNamazTime] = useState([]);
@@ -118,5 +120,9 @@ const MasjidInfo = ({ masjidId }) => {
     </>
   );
 };
+
+MasjidInfo.propTypes = {
+	masjidId: PropTypes.string
+}
 
 export default MasjidInfo;

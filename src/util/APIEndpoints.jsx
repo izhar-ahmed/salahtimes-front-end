@@ -2,10 +2,13 @@ const BASE_URL = 'http://ec2-16-171-146-39.eu-north-1.compute.amazonaws.com'
 export const consts = {
 	// API's
 	IMG_URL: (filename) => `${BASE_URL}/uploads/${filename}`,
+	GET_MASJID_BY_ID_PUBLIC: (slug) => `${BASE_URL}/api/public/masjid/masjid-by-slug/${slug}`,
+	CREATE_CONTACT_API_PUBLIC: `${BASE_URL}/api/contact`,
+	LOGIN_API_PUBLIC: `${BASE_URL}/api/login`,
+	// Admin API's
+	GET_ALL_MASJIDS_API_PUBLIC: `${BASE_URL}/api/public/masjid`,
 	GET_BANNER_API: `${BASE_URL}/api/banner`,
 	ADD_BANNER_API: `${BASE_URL}/api/banner/add`,
-	GET_ALL_MASJIDS_API: `${BASE_URL}/api/public/masjid`,
-	GET_MASJID_BY_ID: (slug) => `${BASE_URL}/api/public/masjid/masjid-by-slug/${slug}`,
 	GET_ALL_MASJID_API: `${BASE_URL}/api/masjid/`,
 	CREATE_MASJID_API: `${BASE_URL}/api/masjid/add`,
 	ADD_NAMAZ_TIME_API: `${BASE_URL}/api/namaz-time/add`,
@@ -19,8 +22,6 @@ export const consts = {
 	GET_ALL_CONTACT_API: `${BASE_URL}/api/contact/get-all-contacts/`,
 	DELETE_CONTACT_API: (id) => `${BASE_URL}/api/contact/delete-contact/${id}`,
 	GET_CSRF_TOKEN: (uniqueStr) => `${BASE_URL}/api/csrf-token/${uniqueStr}`,
-	CREATE_CONTACT_API: `${BASE_URL}/api/contact`,
 	GET_ALL_DASHBOARD_API: `${BASE_URL}/api/dashboard`,
-	LOGIN_API: `${BASE_URL}/api/login`,
 	VALIDATE_API: `${BASE_URL}/api/validate-token`,
 }

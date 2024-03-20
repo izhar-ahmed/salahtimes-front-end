@@ -47,7 +47,7 @@ const ContactForm = ({ successMessage, onSetSuccessMessage }) => {
 				return acc;
 			}, {});
 			
-			await axios.post(consts.CREATE_CONTACT_API, {
+			await axios.post(consts.CREATE_CONTACT_API_PUBLIC, {
 				...sanitizedValues,
 				recaptchaToken,
 			});
