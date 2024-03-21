@@ -1,4 +1,3 @@
-import React from 'react';
 import useEditUserForm from '../../components/admin/useEditUserForm';
 import { useParams } from 'react-router';
 

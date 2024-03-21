@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { getAllContactAPI } from '../../util/util';
+import { consts } from '@/util/APIEndpoints';
+import { getLocalStorageItem } from '@/util/common';
 
 const useContacts = () => {
   const [contacts, setContacts] = useState([]);
@@ -10,8 +11,8 @@ const useContacts = () => {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get(getAllContactAPI, {
+        const token = getLocalStorageItem('token');
+        const response = await axios.get(consts.GET_ALL_CONTACT_API, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -1,5 +1,5 @@
-import React from 'react';
 import useUserProfile from './UserProfileHook';
+import PropTypes from "prop-types";
 
 const UserProfileTab = ({ token }) => {
   const { userProfile, error } = useUserProfile(token);
@@ -22,5 +22,9 @@ const UserProfileTab = ({ token }) => {
     </div>
   );
 };
+
+UserProfileTab.propTypes = {
+  token: PropTypes.string
+}
 
 export default UserProfileTab;

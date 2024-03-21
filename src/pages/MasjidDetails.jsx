@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import MasjidData from "../components/MasjidData";
-import Header from "../components/Header";
-import CustomCTASection from "../components/CustomCTASection";
+import MasjidData from "@/components/MasjidData";
+import Header from "@/components/Header";
+import CustomCTASection from "@/components/CustomCTASection";
 import { Helmet } from "react-helmet-async";
-import { getMasjidById } from "../util/util";
+import { consts } from "@/util/APIEndpoints";
 
 const MasjidDetails = () => {
     const { masjidSlug } = useParams();
@@ -67,7 +67,8 @@ const MasjidDetails = () => {
     const fetchData = async (masjidSlug, token) => {
         try {
             setLoading(true);
-            const response = await axios.get(getMasjidById + masjidSlug, {
+
+            const response = await axios.get(consts.GET_MASJID_BY_ID_PUBLIC(masjidSlug), {
                 cancelToken: token
             });
             const masjidData = response.data.masjid;
@@ -96,48 +97,56 @@ const MasjidDetails = () => {
                 newCancelToken.cancel('Component unmounted.');
             }
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [masjidSlug]);
 
     return (
         <>
             <Helmet>
                 <title>{masjid.masjidName ? `${masjid.masjidName} | Salahtimes` : 'Salahtimes'}</title>
-                <meta
-                    name="description"
-                    content={masjid.masjidName ? `Explore detailed information about ${masjid.masjidName} including its address, prayer timings, and facilities. Discover accurate and reliable Namaz time schedules and directions to the mosque. Salahtimes empowers communities to observe their religious practices effectively.` : `Explore detailed information about masjid including its address, prayer timings, and facilities. Discover accurate and reliable Namaz time schedules and directions to the mosque. Salahtimes empowers communities to observe their religious practices effectively.`}
-                />
             </Helmet>
 
-            <Header
-                heading={<h1 className="text-3xl leading-tight md:text-4xl lg:text-5xl font-bold text-grey mb-0"><span className="font-light">Explore</span> <span className='uppercase'>{masjid.masjidName}</span> <span className="font-light">Details</span></h1>}
-                subHeading={`ADDRESS: ${masjid.masjidAddress}`}
-            />
-
-            <MasjidData
-                masjid={masjid}
-                namazTime={namazTime}
-                loading={loading}
-                error={error}
-            />
-
-            <CustomCTASection
-                heading={<h2 className="text-2xl leading-tight md:text-4xl lg:text-4xl font-bold text-white mb-0"><span className="font-light">Let's Explore</span> The Mosque Locations <span className="font-light">together!</span></h2>}
-                subheading={<p className="text-lg font-medium text-white">Find the Right Direction for Prayer.</p>}
-                exploreLabel="Explore Mosques"
-                directionsLabel="Get Directions"
-            />
-            {masjid.masjidGoogleMapLink && (
-                <iframe
-                    src={masjid.masjidGoogleMapLink}
-                    width="600"
-                    height="450"
-                    title={`${masjid.masjidName} Map`}
-                    style={{ border: 0, width: "100%", height: "450px" }}
-                    allowFullScreen=""
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
+            <section id="masjid-details-hero-section">
+                <Header
+                    heading={<h1 className="text-3xl leading-tight md:text-4xl lg:text-5xl font-bold text-grey mb-0"><span className="font-light">Explore</span> <span className='uppercase'>{masjid.masjidName}</span> <span className="font-light">Details</span></h1>}
+                    subHeading={`ADDRESS: ${masjid.masjidAddress}`}
                 />
-            )}
+            </section>
+
+
+
+            <section id="masjid-details-page-content">
+                <MasjidData
+                    masjid={masjid}
+                    namazTime={namazTime}
+                    loading={loading}
+                    error={error}
+                />
+            </section>
+
+            <section id="masjid-details-cta-section">
+                <CustomCTASection
+                    heading={<h2 className="text-2xl leading-tight md:text-4xl lg:text-4xl font-bold text-white mb-0"><span className="font-light">Let&apos;s Explore</span> The Mosque Locations <span className="font-light">together!</span></h2>}
+                    subheading={<p className="text-lg font-medium text-white">Find the Right Direction for Prayer.</p>}
+                    exploreLabel="Explore Mosques"
+                    directionsLabel="Get Directions"
+                />
+            </section>
+
+            <section id="masjid-details-google-direction">
+                {masjid.masjidGoogleMapLink && (
+                    <iframe
+                        src={masjid.masjidGoogleMapLink}
+                        width="600"
+                        height="450"
+                        title={`${masjid.masjidName} Map`}
+                        style={{ border: 0, width: "100%", height: "450px" }}
+                        allowFullScreen=""
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                    />
+                )}
+            </section>
         </>
     );
 }

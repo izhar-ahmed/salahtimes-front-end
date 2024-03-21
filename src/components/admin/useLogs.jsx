@@ -1,17 +1,18 @@
 // useLogs.js
 import { useState, useEffect } from 'react';
-import {getLogsAPI} from '../../util/util';
+import { consts } from '@/util/APIEndpoints';
+import { getLocalStorageItem } from '@/util/common';
 
 const useLogs = () => {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
+  const token = getLocalStorageItem('token'); // Assuming the token is stored in localStorage
 
   useEffect(() => {
     const fetchLogs = async () => {
       try {
-        const response = await fetch(getLogsAPI, {
+        const response = await fetch(consts.GET_ALL_LOGS_API, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

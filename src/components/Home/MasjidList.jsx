@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import useMosqueGallery from "../../hooks/Home/useMosqueGallery";
 import "./../../pages/Common.css";
-import { imgUrl } from "./../../util/util";
+import { consts } from "@/util/APIEndpoints";
 
 const MasjidList = () => {
   const { mosques, loading } = useMosqueGallery();
@@ -85,7 +85,7 @@ const MasjidList = () => {
             className="card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition duration-300 relative"
           >
             <img
-              src={imgUrl + mosque.masjidPhoto}
+              src={consts.IMG_URL(mosque.masjidPhoto)}
               alt={mosque.masjidName}
               className="w-full h-48 object-cover"
             />

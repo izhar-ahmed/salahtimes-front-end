@@ -2,29 +2,47 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from '@/img/mark-logo.png'
 import { useEffect, useState } from "react";
-import MenuAdmin from "./menuAdmin"; "@/layouts/menuAdmin";
-import MenuOthers from "@/layouts/menuOthers";
+import menuAdmin from "@/layouts/menuAdmin";
+import menuManager from "@/layouts/menuManager";
+import menuUser from "@/layouts/menuUser";
+import { getLocalStorageItem } from "@/util/common";
+import PropTypes from "prop-types";
+import { consts } from "@/util/APIEndpoints";
 
-const AdminNavigationElement = ({isAdminBool}) => {
-	
-	if (isAdminBool === 'true') {
-		return MenuAdmin.map((navItem, index) => {
-			return navItem.display ? <NavLink key={index} className={({ isActive }) => isActive ? "bg-indigo-600 text-white mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded" : "mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded"} to={navItem.to}>{navItem.name}</NavLink> : ''
-		}) 
-	} else {
-		return MenuOthers.map((navItem, index) => {
-			return navItem.display && <NavLink key={index} className={({ isActive }) => isActive ? "bg-indigo-600 text-white mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded" : "mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded"} to={navItem.to}>{navItem.name}</NavLink>
-		}) 
+const AdminNavigationElement = ({ roles }) => {
+	if (typeof roles === 'undefined') {
+		return null;
 	}
+  if (roles.includes('Admin')) {
+		return menuAdmin.map((navItem, index) => {
+      return navItem.display ? <NavLink key={index} className={({ isActive }) => isActive ? "bg-indigo-600 text-white mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded" : "mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded"} to={navItem.to}>{navItem.name}</NavLink> : ''
+    }) 
+  } else if (roles.includes('Manager')) {
+		return menuManager.map((navItem, index) => {
+			return navItem.display && <NavLink key={index} className={({ isActive }) => isActive ? "bg-indigo-600 text-white mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded" : "mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded"} to={navItem.to}>{navItem.name}</NavLink>
+    }) 
+  } else if (roles.includes('User')) {
+    return menuUser.map((navItem, index) => {
+      return navItem.display && <NavLink key={index} className={({ isActive }) => isActive ? "bg-indigo-600 text-white mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded" : "mr-2 hover:bg-indigo-500 hover:text-white py-2 px-4 border-0 rounded"} to={navItem.to}>{navItem.name}</NavLink>
+    }) 
+  } else {
+    return null; // Handle the case when no valid role is provided
+  }
 }
+
+AdminNavigationElement.propTypes = {
+	roles: PropTypes.array
+}
+
+
 
 const AdminLayoutHeader = () => {
 	const navigate = useNavigate();
-	const [isAdmin, setIsAdmin] = useState(false)
+	const [roles, setRoles] = useState([])
 	const handleLogout = async () => {
-		const token = localStorage.getItem('token');
+		const token = getLocalStorageItem('token');
 		try {
-			await axios.post('http://localhost:8080/api/logout', {}, {
+			await axios.post(consts.LOGOUT_API, {}, {
 				headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
 			});
 
@@ -43,8 +61,8 @@ const AdminLayoutHeader = () => {
 	}
 
 	useEffect(() => {
-		const isAdmin = localStorage.getItem('isAdmin')
-		setIsAdmin(isAdmin)
+		const localStorageRoles = getLocalStorageItem('roles')
+		setRoles(localStorageRoles)
 	}, [])
 
 	return (
@@ -55,7 +73,7 @@ const AdminLayoutHeader = () => {
 					<span className="ml-3 text-xl">SalahTimes</span>
 				</Link>
 				<nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-					<AdminNavigationElement isAdminBool={isAdmin} />
+					<AdminNavigationElement roles={roles} />
 				</nav>
 				<button type="button" className="inline-flex items-center bg-gray-100 border-0 py-2 px-4 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" onClick={handleLogout}>Logout
 					<svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-1" viewBox="0 0 24 24">

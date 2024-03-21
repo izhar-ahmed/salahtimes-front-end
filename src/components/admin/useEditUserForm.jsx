@@ -4,14 +4,15 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { getRoleAPI, getUserAPI } from '../../util/util';
+import { consts } from '@/util/APIEndpoints';
+import { getLocalStorageItem } from '@/util/common';
 
 const useEditUserForm = (userId) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
   const [roles, setRoles] = useState([]);
-  const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
+  const token = getLocalStorageItem('token'); // Assuming the token is stored in localStorage
   const navigate = useNavigate();
 
   const initialValues = useMemo(() => ({
@@ -24,7 +25,7 @@ const useEditUserForm = (userId) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(getUserAPI+userId, {
+        const response = await axios.get(consts.GET_USER_API(userId), {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -42,7 +43,7 @@ const useEditUserForm = (userId) => {
 
     const fetchRoles = async () => {
       try {
-        const response = await axios.get(getRoleAPI, {
+        const response = await axios.get(consts.GET_ROLE_API, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -68,7 +69,7 @@ const useEditUserForm = (userId) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.put(`http://localhost:8080/api/users/edit/${userId}`, values, {
+      const response = await axios.put(consts.EDIT_USER_API(userId), values, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

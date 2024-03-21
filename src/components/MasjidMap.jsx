@@ -1,5 +1,5 @@
-import React from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import PropTypes from "prop-types";
 
 const GoogleMapComponent = ({ lat, lng }) => {
   // Google Maps API Key
@@ -20,6 +20,11 @@ const GoogleMapComponent = ({ lat, lng }) => {
     </LoadScript>
   );
 };
+
+GoogleMapComponent.propTypes = {
+  lat: PropTypes.any,
+  lng: PropTypes.any
+}
 
 export default GoogleMapComponent;
 

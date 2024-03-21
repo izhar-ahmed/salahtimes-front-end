@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 const TabComponent = ({ children }) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -23,5 +24,9 @@ const TabComponent = ({ children }) => {
     </div>
   );
 };
+
+TabComponent.propTypes = {
+	children: PropTypes.any
+}
 
 export default TabComponent;

@@ -1,12 +1,13 @@
 // UsersTable.js
-import React, { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router';
-import DeleteConfirmation from '../../components/admin/DeleteConfirmation';
+import DeleteConfirmation from '@/components/admin/DeleteConfirmation';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { PlusIcon } from '@heroicons/react/24/solid'
-import { getAllUserAPI, deleteUserAPI } from '../../util/util';
+import { consts } from '@/util/APIEndpoints';
+import { getLocalStorageItem } from '@/util/common';
 
 const Users = () => {
   const [users, setUsers] = useState([])
@@ -14,7 +15,7 @@ const Users = () => {
   const [error, setError] = useState(null);
   const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const token = getLocalStorageItem('token');
 
   const columns = [
     {
@@ -62,10 +63,9 @@ const Users = () => {
   const handleConfirmDelete = async () => {
     // Perform delete action here 
     try {
-      const token = localStorage.getItem('token');
-
+      const token = getLocalStorageItem('token');
       // Make the DELETE request
-      await axios.delete(deleteUserAPI+selectedUser.id, {
+      await axios.delete(consts.DELETE_USER_API(selectedUser.id), {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ const Users = () => {
   
   const fetchUserData = useCallback(async () => {
     try {
-      const response = await axios.get(getAllUserAPI, {
+      const response = await axios.get(consts.GET_ALL_USER_API, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

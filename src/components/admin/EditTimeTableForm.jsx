@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router";
-import { editNamazTimeAPI } from "../../util/util";
+import PropTypes from "prop-types";
+import { consts } from "@/util/APIEndpoints";
+import { getLocalStorageItem } from "@/util/common";
 
 const EditTimeTableForm = ({ masjidId }) => {
   const [namazTimeTable, setNamazTimeTable] = useState([
@@ -55,12 +57,12 @@ const EditTimeTableForm = ({ masjidId }) => {
     },
   ]);
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
+  const token = getLocalStorageItem("token");
 
   const submitHandler = async (e) => {
     e.preventDefault();
     // console.log(namazTimeTable);
-    const response = await axios.put(editNamazTimeAPI + masjidId, namazTimeTable, {
+    const response = await axios.put(consts.EDIT_NAMAZ_TIME_API(masjidId), namazTimeTable, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -85,7 +87,7 @@ const EditTimeTableForm = ({ masjidId }) => {
 
   const fetchNamazTimeTable = useCallback(async (masjidId) => {
     try {
-      const GET_NAMAZ_TIMETABLE = `http://localhost:8080/api/namaz-time/${masjidId}`;
+      const GET_NAMAZ_TIMETABLE =  consts.GET_NAMAZ_TIMETABLE_API(masjidId);
       const response = await axios.get(GET_NAMAZ_TIMETABLE, {
         headers: {
           "Content-Type": "application/json",
@@ -197,4 +199,7 @@ const EditTimeTableForm = ({ masjidId }) => {
   );
 };
 
+EditTimeTableForm.propTypes = {
+	masjidId: PropTypes.string
+}
 export default EditTimeTableForm;

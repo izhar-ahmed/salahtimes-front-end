@@ -1,10 +1,10 @@
-import React from "react";
-import UserProfileTab from "./../../components/admin/UserProfileTab";
-import ResetPasswordTab from "./../../components/admin/ResetPasswordTab";
-import TabComponent from "./../../components/admin/TabComponent";
+import UserProfileTab from "@/components/admin/UserProfileTab";
+import ResetPasswordTab from "@/components/admin/ResetPasswordTab";
+import TabComponent from "@/components/admin/TabComponent";
+import { getLocalStorageItem } from "@/util/common";
 
 const UserProfilePage = () => {
-  const token = localStorage.getItem("token");
+  const token = getLocalStorageItem("token");
 
   return (
     <div className="container mx-auto pb-8">

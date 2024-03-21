@@ -4,20 +4,21 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
-import { addUserAPI, getRoleAPI } from '../../util/util';
+import { consts } from '@/util/APIEndpoints';
+import { getLocalStorageItem } from '@/util/common';
 
 const useUserForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [roles, setRoles] = useState([]);
-  const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
+  const token = getLocalStorageItem('token'); // Assuming the token is stored in localStorage
 
 	const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response = await axios.get(getRoleAPI, {
+        const response = await axios.get(consts.GET_ROLE_API, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -51,7 +52,7 @@ const useUserForm = () => {
       setLoading(true);
       setError(null);
 
-      const response = await axios.post(addUserAPI, values, {
+      const response = await axios.post(consts.ADD_USER_API, values, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

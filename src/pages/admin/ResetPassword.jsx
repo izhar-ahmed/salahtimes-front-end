@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import { consts } from '@/util/APIEndpoints';
 
 const ResetPassword = () => {
   const [isValidCode, setIsValidCode] = useState(true);
@@ -26,7 +27,7 @@ const ResetPassword = () => {
 
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/reset-password', { ...values, code });
+      const response = await axios.post(consts.RESET_PASSWORD_API_PUBLIC, { ...values, code });
       console.log(response.data.message); // Log success message or handle as needed
       navigate('/m-admin/login', { state: { successMessage: 'Password reset successful. Please login with your new password.' } });
     } catch (error) {
@@ -59,7 +60,7 @@ const ResetPassword = () => {
 								<input 
 									type='hidden'
 									value={formik.values.code}
-								 />
+								/>
                 <div>
                   <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 light:text-white">
                     New Password

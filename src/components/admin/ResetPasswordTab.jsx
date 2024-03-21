@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
+import PropTypes from "prop-types";
+import { consts } from '@/util/APIEndpoints';
+
 
 const ResetPasswordTab = ({ token }) => {
   const [resetSuccess, setResetSuccess] = useState(false);
@@ -14,7 +17,7 @@ const ResetPasswordTab = ({ token }) => {
 
   const onSubmit = async (values, { setSubmitting }) => {
     try {
-      await axios.put('http://localhost:8080/api/users/profile/reset-password', values, {
+      await axios.put(consts.RESET_PASSWORD_API, values, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -85,5 +88,9 @@ const ResetPasswordTab = ({ token }) => {
     </div>
   );
 };
+
+ResetPasswordTab.propTypes = {
+	token: PropTypes.string
+}
 
 export default ResetPasswordTab;

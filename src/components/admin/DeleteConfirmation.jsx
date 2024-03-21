@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const DeleteConfirmation = ({ onConfirm, onCancel }) => {
   return (
     <div className="fixed inset-0 z-10">
@@ -24,5 +26,10 @@ const DeleteConfirmation = ({ onConfirm, onCancel }) => {
     </div>
   );
 };
+
+DeleteConfirmation.propTypes = {
+	onConfirm: PropTypes.any, 
+  onCancel: PropTypes.any
+}
 
 export default DeleteConfirmation;

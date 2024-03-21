@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { getAllContactAPI } from '../../util/util';
+import PropTypes from "prop-types";
+import { consts } from '@/util/APIEndpoints';
+import { getLocalStorageItem } from '@/util/common';
+
 
 const ContactInfo = ({ contactId }) => {
     const [contact, setContact] = useState(null);
 
     useEffect(() => {
         const fetchContactInfo = async () => {
-            const token = localStorage.getItem('token');
+            const token = getLocalStorageItem('token');
             try {
-                const response = await axios.get(getAllContactAPI + contactId, {
+                const response = await axios.get(consts.GET_CONTACT_BY_ID_API(contactId), {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -47,5 +50,9 @@ const ContactInfo = ({ contactId }) => {
         </div>
     );
 };
+
+ContactInfo.propTypes = {
+	contactId: PropTypes.string
+}
 
 export default ContactInfo;

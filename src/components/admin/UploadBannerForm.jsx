@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { addBannerAPI } from '../../util/util';
+import { consts } from '@/util/APIEndpoints';
+import { getLocalStorageItem } from '@/util/common';
 
 const UploadBannerForm = () => {
 	const [image, setImage] = useState(null);
 	const [message, setMessage] = useState('');
-	const token = localStorage.getItem("token");
+	const token = getLocalStorageItem("token");
 
 	const handleImageChange = (e) => {
 		setImage(e.target.files[0]);
@@ -17,7 +18,8 @@ const UploadBannerForm = () => {
 		formData.append('banerImage', image);
 
 		try {
-			await axios.post(addBannerAPI, formData, {
+			
+			await axios.post(consts.ADD_BANNER_API, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
 					'Authorization': `Bearer ${token}`,

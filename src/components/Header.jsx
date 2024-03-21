@@ -1,5 +1,5 @@
-import React from "react";
 import DigitalClock from "./DigitalClock";
+import PropTypes from "prop-types";
 
 const Header = ({ heading, subHeading }) => {
 	return (
@@ -42,5 +42,10 @@ const Header = ({ heading, subHeading }) => {
 		</div>
 	);
 };
+
+Header.propTypes = {
+	heading: PropTypes.any,
+	subHeading: PropTypes.any
+}
 
 export default Header;

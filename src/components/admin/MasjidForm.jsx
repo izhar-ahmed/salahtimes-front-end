@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createMasjidAPI } from '../../util/util';
+import { consts } from '@/util/APIEndpoints';
+import { getLocalStorageItem } from '@/util/common';
 
 const MasjidForm = () => {
   const [masjidName, setMasjidName] = useState('');
@@ -20,7 +21,7 @@ const MasjidForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
+    const token = getLocalStorageItem('token');
     console.log(token);
     // Validate the input (you can add more complex validation if needed)
 
@@ -34,7 +35,7 @@ const MasjidForm = () => {
 
     // Pass the FormData object to the parent component
     try {
-      const response = await axios.post(createMasjidAPI, formData, {
+      const response = await axios.post(consts.CREATE_MASJID_API, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`,

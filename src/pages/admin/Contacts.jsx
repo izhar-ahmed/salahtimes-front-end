@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { Link, useNavigate } from 'react-router-dom';
 import useContacts from './../../components/admin/useContacts';
 import DeleteConfirmation from '../../components/admin/DeleteConfirmation';
 import axios from 'axios';
-import { deleteContactAPI } from '../../util/util';
+import { consts } from '@/util/APIEndpoints';
+import { getLocalStorageItem } from '@/util/common';
 
 const Contacts = () => {
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -73,9 +74,9 @@ const Contacts = () => {
   // Handle confirm delete
   const handleConfirmDelete = async () => {
 		try {
-			const token = localStorage.getItem('token');
+			const token = getLocalStorageItem('token');
 			// Make the DELETE request
-			await axios.delete(deleteContactAPI+deleteContactId, {
+			await axios.delete(consts.DELETE_CONTACT_API(deleteContactId), {
 				headers: {
 					Authorization: `Bearer ${token}`,
 					'Content-Type': 'application/json',

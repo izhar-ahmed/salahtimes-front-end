@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { consts } from '@/util/APIEndpoints';
 
 const ForgotPassword = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -26,7 +27,7 @@ const ForgotPassword = () => {
 
   const onSubmit = async (values, { setSubmitting, setErrors, setStatus }) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/forgot-password', values);
+      const response = await axios.post(consts.FORGOT_PASSWORD_API_PUBLIC, values);
       console.log(response.data.message); // Log success message or handle as needed
       setStatus({ success: true }); // Set success status
       setSubmitting(false);

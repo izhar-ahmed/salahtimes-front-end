@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { imgUrl, getAllMasjidAPI } from "../../util/util";
 import PropTypes from "prop-types";
+import { consts } from "@/util/APIEndpoints";
+import { getLocalStorageItem } from "@/util/common";
 
 const MasjidInfo = ({ masjidId }) => {
   const [masjid, setMasjid] = useState({});
@@ -21,11 +22,11 @@ const MasjidInfo = ({ masjidId }) => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = getLocalStorageItem('token');
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(getAllMasjidAPI + masjidId, {
+        const response = await axios.get(consts.GET_MASJID_BY_ID_API(masjidId), {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -70,7 +71,7 @@ const MasjidInfo = ({ masjidId }) => {
         <div className="flex">
           <div className="w-1/4">
             <img
-              src={imgUrl + masjid.masjidPhoto}
+              src={consts.IMG_URL(masjid.masjidPhoto)}
               alt={masjid.masjidName}
               className="mb-4 w-full h-40 object-cover rounded-md"
             />
@@ -87,7 +88,7 @@ const MasjidInfo = ({ masjidId }) => {
             </p>
             <p className="text-gray-600 mb-1">
               <strong>Google Embed Link:</strong>{" "}
-              <div className="break-all">{masjid.masjidGoogleMapLink}</div>
+              <span className="break-all">{masjid.masjidGoogleMapLink}</span>
             </p>
           </div>
         </div>

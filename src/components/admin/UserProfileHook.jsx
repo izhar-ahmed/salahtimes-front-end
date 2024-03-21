@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { consts } from '@/util/APIEndpoints';
 
 const useUserProfile = (token) => {
   const [userProfile, setUserProfile] = useState(null);
@@ -8,7 +9,7 @@ const useUserProfile = (token) => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/users/get-user-profile', {
+        const response = await axios.get(consts.GET_USER_PROFILE_API, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',

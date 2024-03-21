@@ -8,6 +8,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import DOMPurify from 'dompurify';
 import { useLocation } from 'react-router-dom';
 import { consts } from '@/util/APIEndpoints';
+import { setLocalStorageItem } from '@/util/common';
 
 
 const LoginForm = () => {
@@ -44,7 +45,7 @@ const LoginForm = () => {
       return {
         "token": response.data.token,
         "name": response.data.name,
-        "isAdmin": response.data.roles[0].Roles.includes("Admin")
+        "roles": response.data.roles[0].Roles
       }
     } catch (error) {
       console.error("error while login", error);
@@ -67,9 +68,9 @@ const LoginForm = () => {
         if (!authToken) {
           navigate('/m-admin/login');
         } else {
-          localStorage.setItem('token', authToken.token);
-          localStorage.setItem('isAdmin', authToken.isAdmin)
-          localStorage.setItem('name', authToken.name)
+          setLocalStorageItem('token', authToken.token)
+          setLocalStorageItem('roles', authToken.roles)
+          setLocalStorageItem('name', authToken.name)
           navigate('/m-admin');
         }
       } catch (error) {
@@ -84,20 +85,20 @@ const LoginForm = () => {
     return timestamp + randomString;
   }
 
-  // Fetch CSRF token from the server when the component mounts
-  const fetchCsrfToken = async (token) => {
-    try {
-      const uniqueString = generateUniqueString();
-      const response = await axios.get(consts.GET_CSRF_TOKEN(uniqueString), {
-        cancelToken: token
-      });
-      setCsrfToken(response.data.csrfToken);
-    } catch (error) {
-      console.error('Error fetching CSRF token:', error);
-    }
-  };
-
   useEffect(() => {
+    // Fetch CSRF token from the server when the component mounts
+    const fetchCsrfToken = async (token) => {
+      try {
+        const uniqueString = generateUniqueString();
+        const response = await axios.get(consts.GET_CSRF_TOKEN(uniqueString), {
+          cancelToken: token
+        });
+        setCsrfToken(response.data.csrfToken);
+      } catch (error) {
+        console.error('Error fetching CSRF token:', error);
+      }
+    };
+
     if (cancelToken) {
       cancelToken.cancel('Operation canceled by the user.');
     }
@@ -115,6 +116,7 @@ const LoginForm = () => {
         newCancelToken.cancel('Component unmounted.');
       }
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   return (

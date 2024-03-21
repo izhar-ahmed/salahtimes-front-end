@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import PropTypes from "prop-types";
 
 const Map = ({ lat, lng }) => {
   const containerStyle = {
@@ -54,5 +55,10 @@ const Map = ({ lat, lng }) => {
     <div>Loading map...</div>
   );
 };
+
+Map.propTypes = {
+	lat: PropTypes.any,
+	lng: PropTypes.any
+}
 
 export default Map;

@@ -1,7 +1,10 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { getAllMasjidAPI } from "../../util/util";
+import PropTypes from "prop-types";
+import { consts } from "@/util/APIEndpoints";
+import { getLocalStorageItem } from "@/util/common";
+
 
 
 const EditMasjidForm = ({masjidId}) => {
@@ -20,9 +23,9 @@ const EditMasjidForm = ({masjidId}) => {
   };
 
 	const GetMasjidDetails = useCallback(async () => {
-    const token = localStorage.getItem('token');
+    const token = getLocalStorageItem('token');
     try {
-      const response = await axios.get(getAllMasjidAPI+masjidId, {
+      const response = await axios.get(consts.GET_MASJID_BY_ID_API(masjidId), {
         headers: {
           Authorization: `Bearer ${token}`,
         }
@@ -44,7 +47,7 @@ const EditMasjidForm = ({masjidId}) => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const token = localStorage.getItem('token');
+		const token = getLocalStorageItem('token');
 		// Validate the input (you can add more complex validation if needed)
 	
 		// Create a new FormData object to handle file upload
@@ -57,7 +60,7 @@ const EditMasjidForm = ({masjidId}) => {
 	
 		// Pass the FormData object to the parent component
 		try {
-			const response = await axios.put(getAllMasjidAPI + masjidId, formData, {
+			const response = await axios.put(consts.UPDATE_MASJID_API(masjidId), formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
 					'Authorization': `Bearer ${token}`,
@@ -152,6 +155,10 @@ const EditMasjidForm = ({masjidId}) => {
       </div>
     </div>
 	);
+}
+
+EditMasjidForm.propTypes = {
+	masjidId: PropTypes.string
 }
 
 export default EditMasjidForm;

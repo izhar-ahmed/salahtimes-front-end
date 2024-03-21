@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { addNamazTimeAPI } from "../../util/util";
+import { consts } from "@/util/APIEndpoints";
 import PropTypes from "prop-types";
+import { getLocalStorageItem } from "@/util/common";
 
 const AddTimeTableForm = ({ masjidId }) => {
 	const [namazTimeTable, setNamazTimeTable] = useState([
@@ -57,12 +58,12 @@ const AddTimeTableForm = ({ masjidId }) => {
 	]);
 
 	const navigate = useNavigate();
-	const token = localStorage.getItem('token');
+	const token = getLocalStorageItem('token');
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
 		// console.log(namazTimeTable);
-		const response = await axios.post(addNamazTimeAPI, namazTimeTable, {
+		const response = await axios.post(consts.ADD_NAMAZ_TIME_API, namazTimeTable, {
 			headers: {
 				'Content-Type': 'application/json',
 				'Authorization': `Bearer ${token}`,
